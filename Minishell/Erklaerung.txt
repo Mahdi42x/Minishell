@@ -1,0 +1,30 @@
+zulaessige Funktionen:
+readline: Eine Funktion zum Lesen einer Zeile von der Standardeingabe.
+rl_clear_history: Löscht die Historie von readline.
+rl_on_new_line: Signalisiert readline, dass eine neue Zeile begonnen hat.
+rl_replace_line: Ersetzt die aktuelle Zeile in readline.
+rl_redisplay: Aktualisiert die Anzeige von readline.
+add_history: Fügt eine Zeile zur Historie hinzu.
+printf: Eine Funktion zum Formatieren und Ausgeben von Zeichenketten auf dem Bildschirm.
+malloc: Reserviert Speicherplatz auf dem Heap zur Laufzeit.
+free: Gibt den Speicherplatz frei, der mit malloc allokiert wurde.
+write: Schreibt Daten in eine Datei oder ein Dateideskriptor.
+access: Überprüft die Zugriffsrechte einer Datei.
+open: Öffnet eine Datei für Lese- oder Schreibzugriff.
+read: Liest Daten aus einer Datei oder einem Dateideskriptor.
+close: Schließt einen Dateideskriptor.
+fork: Erstellt einen neuen Prozess (Kindprozess) durch Kopieren des aktuellen Prozesses (Elternprozess).
+wait, waitpid, wait3, wait4: Warten auf das Ende eines Kindprozesses.
+signal, sigaction, sigemptyset, sigaddset, kill, exit: Funktionen zur Signalbehandlung und Prozessbeendigung.
+getcwd, chdir: Zur Arbeit mit dem aktuellen Arbeitsverzeichnis.
+stat, lstat, fstat: Informationen über Dateien abrufen.
+unlink: Löscht eine Datei vom Dateisystem.
+execve: Ersetzt das aktuelle Programm durch ein anderes.
+dup, dup2: Dupliziert Dateideskriptoren.
+pipe: Erstellt eine Pipe für die Interprozesskommunikation.
+opendir, readdir, closedir: Zur Arbeit mit Verzeichnissen.
+strerror, perror: Zur Fehlerbehandlung und Fehlerausgabe.
+isatty, ttyname, ttyslot, ioctl: Zur Arbeit mit Terminalen.
+getenv: Ruft den Wert einer Umgebungsvariable ab.
+tcsetattr, tcgetattr: Zur Konfiguration von Terminalattributen.
+tgetent, tgetflag, tgetnum, tgetstr, tgoto, tputs: Zur Terminalemulation und Steuerung der Terminalausgabe.
