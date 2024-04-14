@@ -13,6 +13,7 @@ SRCS	=	minishell.c\
 			execution/exit_exec.c\
 			execution/pwd_exec.c\
 			execution/echo_exec.c\
+			parsing/echo_parsing.c\
 
 OBJS	=	$(SRCS:.c=.o)
 

@@ -21,12 +21,17 @@
 # include <signal.h>
 # include "libft/libft.h"
 
+typedef struct t_minishell
+{
+	int output;
+}				t_minishell;
 
 //--------------------//
 //---	utils	---//
 //---	free ---//
 void	free_execut_commands(char **args);
 //---	parsing	---//
+void echo_parsing(int argc, char **argv);
 //---	execution	---//
 void execute_command(char **args);
 void exit_command(char **args);
