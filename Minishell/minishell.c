@@ -6,7 +6,7 @@
 /*   By: mawada <mawada@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 16:31:01 by mawada            #+#    #+#             */
-/*   Updated: 2024/04/13 15:52:03 by mawada           ###   ########.fr       */
+/*   Updated: 2024/04/14 17:08:16 by mawada           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ int main(int argc, char **argv, char **envp)
 		if (args != NULL)
 		{
 			execute_command(args);
-			// Speicher freigeben
 			free_execut_commands(args);
 		}
 	}

@@ -22,4 +22,3 @@ Main:
 	-- -> Cd-Eingabe erstellt. (wechselt das Verzeichnis).
 -- execution fuer echo erstellt.
 	-- -> Echo-Eingabe erstellt. (gibt die Eingabe aus) -> einfache implentierung.
-	

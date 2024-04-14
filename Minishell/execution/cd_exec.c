@@ -1,39 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   read1.c                                            :+:      :+:    :+:   */
+/*   cd_exec.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mawada <mawada@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/13 14:23:07 by mawada            #+#    #+#             */
-/*   Updated: 2024/04/13 16:12:04 by mawada           ###   ########.fr       */
+/*   Created: 2024/04/14 17:58:55 by mawada            #+#    #+#             */
+/*   Updated: 2024/04/14 17:59:23 by mawada           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "../minishell.h"
 
-void execute_command(char **args)
+void	cd_command(char **args)
 {
-	// Hier kannst du den Befehl ausführen
-	//printf("Executing command: %s\n", args[0]);
-
-	// Beispiel: Wenn der Befehl "exit" ist, beende die Schleife
-	if (ft_strcmp(args[0], "exit") == 0)
-	{
-		printf("Exiting...\n");
-		free_execut_commands(args);
-		exit(0);
-	}
-	else if (ft_strcmp(args[0], "pwd") == 0)
-	{
-		char pwd[1024];
-		if (getcwd(pwd, sizeof(pwd)) != NULL)
-		{
-			printf("%s\n", pwd);
-		}
-	}
-	else if (strcmp(args[0], "cd") == 0)
+	if (strcmp(args[0], "cd") == 0)
 	{
 		if (args[1] == NULL)
 		{
@@ -58,20 +39,5 @@ void execute_command(char **args)
 				perror("chdir() error");
 			}
 		}
-	}
-	else if (strcmp(args[0], "echo") == 0)
-	{
-		// Starte ab dem zweiten Argument, um den eigentlichen Text zu erhalten
-		int i = 1;
-		while (args[i] != NULL)
-		{
-			printf("%s ", args[i]);
-			i++;
-		}
-		printf("\n");
-	}
-	else
-	{
-		printf("%s: command not found\n", args[0]);
 	}
 }

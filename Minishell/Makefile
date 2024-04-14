@@ -9,7 +9,10 @@ LIBS	=	 ./libft/libft.a
 SRCS	=	minishell.c\
 			src/bash.c\
 			src/free.c\
-			execution/read1.c
+			execution/execute.c\
+			execution/exit_exec.c\
+			execution/pwd_exec.c\
+			execution/echo_exec.c\
 
 OBJS	=	$(SRCS:.c=.o)
 

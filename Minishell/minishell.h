@@ -6,7 +6,7 @@
 /*   By: mawada <mawada@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 15:17:46 by mawada            #+#    #+#             */
-/*   Updated: 2024/04/13 15:50:46 by mawada           ###   ########.fr       */
+/*   Updated: 2024/04/14 19:01:34 by mawada           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <signal.h>
 # include "libft/libft.h"
 
+
 //--------------------//
 //---	utils	---//
 //---	free ---//
@@ -28,6 +29,10 @@ void	free_execut_commands(char **args);
 //---	parsing	---//
 //---	execution	---//
 void execute_command(char **args);
+void exit_command(char **args);
+void pwd_command(char **args);
+void cd_command(char **args);
+void echo_command(char **args);
 //---	main	---//
 char *read_input(char *buffer, int buffer_size);
 
