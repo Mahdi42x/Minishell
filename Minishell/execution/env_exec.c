@@ -1,32 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo_parsing.c                                     :+:      :+:    :+:   */
+/*   env_exec.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mawada <mawada@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/14 17:09:29 by emkalkan          #+#    #+#             */
-/*   Updated: 2024/04/14 19:28:46 by mawada           ###   ########.fr       */
+/*   Created: 2024/04/15 16:19:39 by mawada            #+#    #+#             */
+/*   Updated: 2024/04/15 16:45:42 by mawada           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int echo_parsing(int argc, char **argv, t_minishell *parsing)
+void env_command(char **args)
 {
-	parsing->output = 0;
-	if (argc >= 1)
-	{
-		if (ft_strcmp(argv[0], "echo") == 0)
-		{
-			if (ft_strcmp(argv[1], "-n") == 0)
-			{
-				parsing->output = -1;
-				return (EXIT_SUCCESS);
-			}
-			parsing->output = 1;
-			return (EXIT_SUCCESS);
-		}
-	}
-	return (EXIT_SUCCESS);
+    if (ft_strcmp(args[0], "env") == 0)
+    {
+        extern char **environ; // Externe Deklaration der Umgebungsvariablen
+
+        // Iteriere über die Umgebungsvariablen und gib sie aus
+        int i = 0;
+        while (environ[i] != NULL)
+        {
+            printf("%s\n", environ[i]);
+            i++;
+        }
+
+       // free_execut_commands(args);
+    }
 }
+
