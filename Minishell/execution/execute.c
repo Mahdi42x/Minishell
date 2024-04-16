@@ -6,7 +6,7 @@
 /*   By: mawada <mawada@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 17:09:02 by mawada            #+#    #+#             */
-/*   Updated: 2024/04/16 18:33:45 by mawada           ###   ########.fr       */
+/*   Updated: 2024/04/16 19:06:58 by mawada           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ void execute_command(char **args) {
 	}
 	if (!command_executed && strcmp(args[0], "pwd") == 0)
 	{
-		printf("\nentered2\n");
 		pwd_command(args);
 		command_executed = 1;
 	}

@@ -6,9 +6,10 @@
 /*   By: mawada <mawada@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 15:24:17 by mawada            #+#    #+#             */
-/*   Updated: 2023/11/23 10:44:58 by mawada           ###   ########.fr       */
+/*   Updated: 2024/04/16 19:05:50 by mawada           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "libft.h"
 
 static int	count_words(const char *str, char c)
@@ -62,11 +63,11 @@ char	**ft_split(char const *s, char c)
 	i = 0;
 	j = 0;
 	index = -1;
-	while (i <= ft_strlen(s))
+	while (i < ft_strlen(s))
 	{
 		if (s[i] != c && index < 0)
 			index = i;
-		else if ((s[i] == c || i == ft_strlen(s)) && index >= 0)
+		else if ((s[i] == c || i == ft_strlen(s) - 1) && index >= 0)
 		{
 			split[j++] = word_dup(s, index, i);
 			index = -1;

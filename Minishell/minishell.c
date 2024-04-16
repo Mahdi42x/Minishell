@@ -6,7 +6,7 @@
 /*   By: mawada <mawada@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 16:31:01 by mawada            #+#    #+#             */
-/*   Updated: 2024/04/16 18:53:00 by mawada           ###   ########.fr       */
+/*   Updated: 2024/04/16 19:06:40 by mawada           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ int main(int argc, char **argv, char **envp)
 		char **args = ft_split(buffer, ' ');
 		if (args != NULL)
 		{
-			printf("\nenterED\n");
 			execute_command(args);
 			free_execut_commands(args);
 		}
