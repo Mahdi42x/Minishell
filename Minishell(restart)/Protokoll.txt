@@ -1,0 +1,24 @@
+Mahdi:
+
+Ordner erstellt.
+verlinkung zu Github erstellt.
+readme erstellt.
+c files erstellt.
+h file erstellt.
+makefile erstellt.
+
+Im Code:
+
+Main:
+-- Prompt erstellt.
+	-- -> Eingabeaufforderung erstellt. (wartet einfach).
+-- ft_splitt hinzugefuegt, um parsing zu simulieren.
+	-- -> siehe im execution-ordner in der read1.c (Name ist noch nicht final).
+-- erste execution fuer exit erstellt.
+	-- -> Exit-Eingabe erstellt. (wartet auf bestimmte Zeichenfolge und beendet das Programm).
+-- execution fuer pwd erstellt.
+	-- -> Pwd-Eingabe erstellt. (gibt den aktuellen Pfad aus).
+-- execution fuer cd erstellt.
+	-- -> Cd-Eingabe erstellt. (wechselt das Verzeichnis).
+-- execution fuer echo erstellt.
+	-- -> Echo-Eingabe erstellt. (gibt die Eingabe aus) -> einfache implentierung.
