@@ -6,7 +6,7 @@
 #    By: mawada <mawada@student.42berlin.de>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/10 15:22:24 by mawada            #+#    #+#              #
-#    Updated: 2024/04/17 14:23:25 by mawada           ###   ########.fr        #
+#    Updated: 2024/04/18 17:00:06 by mawada           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,8 @@ SRCS			=	ft_isalnum.c ft_isprint.c ft_memcmp.c  ft_putchar_fd.c ft_split.c \
 					ft_toupper.c ft_calloc.c  ft_isdigit.c ft_memchr.c  ft_memset.c  \
 					ft_putstr_fd.c  ft_strjoin.c ft_strmapi.c ft_strtrim.c \
 					ft_printf.c print_command.c print_command_2.c get_next_line.c get_next_line_utils.c\
-					ft_gnl/mget_next_line.c
+					ft_gnl/mget_next_line.c ft_skip/ft_skip_char.c ft_skip/ft_skip_chars.c ft_skip/ft_skip_space.c \
+					ft_skip/ft_skip_spacenl.c ft_isin.c
 
 B_SRC			=	ft_lstadd_back.c ft_lstadd_front.c ft_lstclear.c \
 					ft_lstdelone.c ft_lstiter.c ft_lstlast.c \

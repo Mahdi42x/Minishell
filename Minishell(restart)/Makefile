@@ -11,9 +11,9 @@ HEADER = minishell.h
 
 MAIN = minishell signal
 
-PARSING = line
+PARSING = line tokens
 
-TOOLS = free parsing
+TOOLS = free parsing type
 
 SRCS =	$(addsuffix .c, $(addprefix srcs/main/, $(MAIN))) \
 		$(addsuffix .c, $(addprefix srcs/parsing/, $(PARSING))) \

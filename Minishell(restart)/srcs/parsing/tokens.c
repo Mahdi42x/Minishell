@@ -1,33 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   tokens.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mawada <mawada@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/08 16:31:01 by mawada            #+#    #+#             */
-/*   Updated: 2024/04/19 17:38:53 by mawada           ###   ########.fr       */
+/*   Created: 2020/06/18 14:18:03 by cclaude           #+#    #+#             */
+/*   Updated: 2024/04/19 18:10:01 by mawada           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-t_sig	g_sig;
-
-int	main(int ac, char **av, char **envp)
+t_token *tokenize(const char *line)
 {
-	t_minishell	minishell;
-	(void)ac;
-	(void)av;
-	(void)envp;
-	minishell.in = dup(STDIN);
-	minishell.out = dup(STDOUT);
-	minishell.exit = 0;
-	minishell.ret = 0;
-	minishell.no_exec = 0;
-	setup_signals();
-	while (minishell.exit == 0)
+	t_token *token;
+	int		i;
+	int		j;
+
+	token = malloc(sizeof(t_token));
+	if (token == NULL)
+		return (NULL);
+	i = 0;
+	while (line[i])
 	{
-		parse(&minishell);
+		
 	}
+	return(token);
 }

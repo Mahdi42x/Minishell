@@ -1,33 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   ft_skip_char.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mawada <mawada@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/08 16:31:01 by mawada            #+#    #+#             */
-/*   Updated: 2024/04/19 17:38:53 by mawada           ###   ########.fr       */
+/*   Created: 2024/04/18 16:52:50 by mawada            #+#    #+#             */
+/*   Updated: 2024/04/18 16:52:52 by mawada           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../libft.h"
 
-t_sig	g_sig;
-
-int	main(int ac, char **av, char **envp)
+void	ft_skip_char(const char *str, int *i, char c)
 {
-	t_minishell	minishell;
-	(void)ac;
-	(void)av;
-	(void)envp;
-	minishell.in = dup(STDIN);
-	minishell.out = dup(STDOUT);
-	minishell.exit = 0;
-	minishell.ret = 0;
-	minishell.no_exec = 0;
-	setup_signals();
-	while (minishell.exit == 0)
-	{
-		parse(&minishell);
-	}
+	while (str[*i] == c)
+		(*i)++;
 }

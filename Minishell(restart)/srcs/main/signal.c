@@ -6,53 +6,42 @@
 /*   By: mawada <mawada@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 12:51:56 by mawada            #+#    #+#             */
-/*   Updated: 2024/04/17 13:54:58 by mawada           ###   ########.fr       */
+/*   Updated: 2024/04/19 17:41:18 by mawada           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-t_sig g_sig;
-
-void	sig_int(int code)
+static void	handle_sigint(int sig)
 {
-	(void)code;
-	if (g_sig.pid == 0)
-	{
-		ft_putstr_fd("\b\b  ", STDERR);
-		ft_putstr_fd("\n", STDERR);
-		ft_putstr_fd("\033[0;36m\033[1m🤬 minishell ▸ \033[0m", STDERR);
-		g_sig.exit_status = 1;
-	}
-	else
-	{
-		ft_putstr_fd("\n", STDERR);
-		g_sig.exit_status = 130;
-	}
-	g_sig.sigint = 1;
+	(void)sig;
+	write(1, "\n", 1);
+	rl_replace_line("", 0);
+	rl_on_new_line();
+	rl_redisplay();
 }
 
-void	sig_quit(int code)
+void	sigaction_init(struct sigaction *sa)
 {
-	char	*nbr;
-
-	nbr = ft_itoa(code);
-	if (g_sig.pid != 0)
+	if (sa != NULL)
 	{
-		ft_putstr_fd("Quit: ", STDERR);
-		ft_putendl_fd(nbr, STDERR);
-		g_sig.exit_status = 131;
-		g_sig.sigquit = 1;
+		sa->sa_handler = NULL;
+		sa->sa_sigaction = NULL;
+		sa->sa_mask = (sigset_t){0};
+		sa->sa_flags = 0;
+		sa->sa_restorer = NULL;
 	}
-	else
-		ft_putstr_fd("\b\b  \b\b", STDERR);
-	ft_memdel(nbr);
 }
 
-void	sig_init(void)
+void	setup_signals(void)
 {
-	g_sig.sigint = 0;
-	g_sig.sigquit = 0;
-	g_sig.pid = 0;
-	g_sig.exit_status = 0;
+	struct sigaction	sa_int;
+	struct sigaction	sa_quit;
+
+	sigaction_init(&sa_int);
+	sigaction_init(&sa_quit);
+	sa_int.sa_handler = &handle_sigint;
+	sigaction(SIGINT, &sa_int, NULL);
+	sa_quit.sa_handler = SIG_IGN;
+	sigaction(SIGQUIT, &sa_quit, NULL);
 }
