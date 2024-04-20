@@ -6,7 +6,7 @@
 /*   By: mawada <mawada@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 12:14:03 by mawada            #+#    #+#             */
-/*   Updated: 2024/04/19 18:06:03 by mawada           ###   ########.fr       */
+/*   Updated: 2024/04/20 15:25:01 by mawada           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,5 +40,12 @@ void	parse(t_minishell *minishell)
 	if (quote_check(minishell, &minishell->line))
 		return ;
 	token = tokenize(minishell->line);
+	t_token *current = token;
+	while (current != NULL)
+	{
+		printf("%s (Type: %d)\n", current->str, current->type);
+		current = current->next;
+	}
+	free_token(token);
 	ft_memdel(minishell->line);
 }

@@ -6,7 +6,7 @@
 /*   By: mawada <mawada@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 14:26:35 by mawada            #+#    #+#             */
-/*   Updated: 2024/04/17 14:26:37 by mawada           ###   ########.fr       */
+/*   Updated: 2024/04/20 14:55:30 by mawada           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,14 @@
 
 void	free_token(t_token *start)
 {
-	while (start && start->next)
+	t_token *temp;
+
+	while (start != NULL)
 	{
-		ft_memdel(start->str);
+		temp = start;
 		start = start->next;
-		ft_memdel(start->prev);
-	}
-	if (start)
-	{
-		ft_memdel(start->str);
-		ft_memdel(start);
+		free(temp->str);
+		free(temp);
 	}
 }
 
