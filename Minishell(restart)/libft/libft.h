@@ -6,7 +6,7 @@
 /*   By: mawada <mawada@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 15:28:57 by mawada            #+#    #+#             */
-/*   Updated: 2024/04/18 17:01:03 by mawada           ###   ########.fr       */
+/*   Updated: 2024/04/22 12:36:52 by mawada           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,13 +146,7 @@ char	*gft_strjoin(char const *s1, char const *s2);
 
 char	*gft_strchr(const char *s, int c);
 
-int		mget_next_line(int fd, char **line);
-char	*error(char *stock);
-int		newline_check(char *stock, int read_size);
-char	*buf_join(char *stock, char *buf);
-char	*stock_trim(char *stock);
-char	*get_line(char *stock);
-int	ft_isin(int c, char *base);
+int		ft_isin(int c, char *base);
 void	ft_skip_char(const char *str, int *i, char c);
 void	ft_skip_chars(const char *str, int *i, char *base);
 void	ft_skip_space(const char *str, int *i);

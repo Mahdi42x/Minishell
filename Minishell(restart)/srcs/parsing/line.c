@@ -6,7 +6,7 @@
 /*   By: mawada <mawada@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 12:14:03 by mawada            #+#    #+#             */
-/*   Updated: 2024/04/20 15:25:01 by mawada           ###   ########.fr       */
+/*   Updated: 2024/04/22 15:59:12 by mawada           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ void	parse(t_minishell *minishell)
 		minishell->exit = 1;
 		return;
 	}
+	if (ft_strcmp(minishell->line, "env") == 0)
+		ft_env(minishell->env); //kommt noch woanders hin
 	if (quote_check(minishell, &minishell->line))
 		return ;
 	token = tokenize(minishell->line);

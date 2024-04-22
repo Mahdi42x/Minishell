@@ -1,33 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mawada <mawada@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/08 16:31:01 by mawada            #+#    #+#             */
-/*   Updated: 2024/04/22 15:58:35 by mawada           ###   ########.fr       */
+/*   Created: 2024/04/22 15:05:52 by mawada            #+#    #+#             */
+/*   Updated: 2024/04/22 15:57:41 by mawada           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-t_sig	g_sig;
-
-int	main(int ac, char **av, char **envp)
+int		env_init(t_minishell *minishell, char **env_array)
 {
-	t_minishell	minishell;
-	(void)ac;
-	(void)av;
-	minishell.in = dup(STDIN);
-	minishell.out = dup(STDOUT);
-	minishell.exit = 0;
-	minishell.ret = 0;
-	minishell.no_exec = 0;
-	setup_signals();
-	env_init(&minishell, envp);
-	while (minishell.exit == 0)
+	t_env	*env;
+	t_env	*new;
+	int		i;
+
+	if (!(env = malloc(sizeof(t_env))))
+		return (1);
+	env->value = ft_strdup(env_array[0]);
+	env->next = NULL;
+	minishell->env = env;
+	i = 1;
+	while (env_array && env_array[0] && env_array[i])
 	{
-		parse(&minishell);
+		if (!(new = malloc(sizeof(t_env))))
+			return (1);
+		new->value = ft_strdup(env_array[i]);
+		new->next = NULL;
+		env->next = new;
+		env = new;
+		i++;
 	}
+	return (0);
 }

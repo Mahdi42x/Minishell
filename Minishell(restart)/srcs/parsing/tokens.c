@@ -6,54 +6,47 @@
 /*   By: mawada <mawada@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/18 14:18:03 by cclaude           #+#    #+#             */
-/*   Updated: 2024/04/20 15:35:51 by mawada           ###   ########.fr       */
+/*   Updated: 2024/04/22 14:39:49 by mawada           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
 t_token *tokenize(const char *line)
 {
-	t_token	*head;
-	t_token	*current;
-	char	**tokens;
-	int		i;
-	int		j;
+	t_token *head = NULL;
+	t_token *current = NULL;
+	int index = 0;
+	int start = 0;
 
-	head = NULL;
-	current = NULL;
-	i = 0;
-	j = 0;
+	while (line[index] != '\0')
+	{
+		// Finden Sie den Anfang eines Tokens
+		while (line[index] == ' ') // Überspringen Sie Leerzeichen
+			index++;
+		start = index;
 
-	tokens = ft_split(line, ' ');
-	if (tokens != NULL && tokens[i] != NULL)
-	{
-		head = (t_token *)malloc(sizeof(t_token));
-		head->str = ft_strdup(tokens[i]);
-		head->type = CMD;
-		head->prev = NULL;
-		head->next = NULL;
-		current = head;
-		i++;
-	}
-	while(tokens != NULL && tokens[i] != NULL)
-	{
-		current->next = (t_token *)malloc(sizeof(t_token));
-		current->next->str = ft_strdup(tokens[i]);
-		current->next->type = CMD;
-		current->next->prev = current;
-		current->next->next = NULL;
-		current = current->next;
-		i++;
-	}
-	if (tokens != NULL)
-	{
-		while (tokens[j] != NULL)
+		// Finden Sie das Ende des Tokens
+		while (line[index] != ' ' && line[index] != '\0')
+			index++;
+
+		// Erstellen Sie ein neues Token und fügen Sie es zur Liste hinzu
+		if (index > start)
 		{
-			ft_memdel(tokens[j]);
-			j++;
+			t_token *token = (t_token *)malloc(sizeof(t_token));
+			token->str = (char *)malloc((index - start + 1) * sizeof(char));
+			memcpy(token->str, &line[start], index - start);
+			token->str[index - start] = '\0';
+			token->type = CMD;
+			token->prev = current;
+			token->next = NULL;
+
+			if (head == NULL)
+				head = token;
+			else
+				current->next = token;
+			current = token;
 		}
-		ft_memdel(tokens);
 	}
-	return(head);
+
+	return head;
 }

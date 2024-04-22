@@ -6,7 +6,7 @@
 /*   By: mawada <mawada@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 15:17:46 by mawada            #+#    #+#             */
-/*   Updated: 2024/04/19 18:08:13 by mawada           ###   ########.fr       */
+/*   Updated: 2024/04/22 15:56:05 by mawada           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@
 # define STDIN 0
 # define STDOUT 1
 # define STDERR 2
+
+# define SUCCESS 0
 
 typedef struct s_token
 {

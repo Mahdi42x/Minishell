@@ -1,46 +1,67 @@
 
-NAME	=	minishell
+NAME = minishell
 
-CC		=	cc
-CFLAGS	=	-Wall -Werror -Wextra -g
+CC = cc
+
+CFLAGS = -Wall -Wextra -Werror -I includes/ -I libft/includes/
+
+LIBFT = -L libft -lft
+
 LDFLAGS = -lreadline
-
-LIBS	=	 ./libft/libft.a
 
 HEADER = minishell.h
 
 MAIN = minishell signal
-
 PARSING = line tokens
-
+ENV = env
+EXEC =
+BUILTINS = env
 TOOLS = free parsing type
 
-SRCS =	$(addsuffix .c, $(addprefix srcs/main/, $(MAIN))) \
-		$(addsuffix .c, $(addprefix srcs/parsing/, $(PARSING))) \
-		$(addsuffix .c, $(addprefix srcs/tools/, $(TOOLS))) \
-		# $(addsuffix .c, $(addprefix srcs/builtins/, $(BUILTINS))) \
-		# $(addsuffix .c, $(addprefix srcs/env/, $(ENV))) \
-		# $(addsuffix .c, $(addprefix srcs/exec/, $(EXEC))) \
+SRC = $(addsuffix .c, $(addprefix srcs/main/, $(MAIN))) \
+	  $(addsuffix .c, $(addprefix srcs/parsing/, $(PARSING))) \
+	  $(addsuffix .c, $(addprefix srcs/env/, $(ENV))) \
+	  $(addsuffix .c, $(addprefix srcs/exec/, $(EXEC))) \
+	  $(addsuffix .c, $(addprefix srcs/builtins/, $(BUILTINS))) \
+	  $(addsuffix .c, $(addprefix srcs/tools/, $(TOOLS))) \
 
+OBJ = $(SRC:c=o)
 
-OBJS	=	$(SRCS:.c=.o)
+all: $(NAME)
 
-all:		$(NAME)
+$(NAME): $(OBJ)
+	@echo "\n"
+	@make -C libft/
+	@echo "\033[0;32mCompiling minishell..."
+	@$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(LIBFT) $(LDFLAGS)
+	@echo "\n\033[0mDone !"
 
-$(NAME): $(OBJS)
-			make -C  ./libft
-			$(CC) $(CFLAGS) $(OBJS) $(LIBS) -o $(NAME) $(LDFLAGS)
+%.o: %.c
+	@printf "\033[0;33mGenerating minishell objects... %-33.33s\r" $@
+	@${CC} ${CFLAGS} -c $< -o $@
 
 clean:
-			make clean -C  ./libft
-			rm -rf $(OBJS)
-			
-fclean:		clean
-			rm -rf $(NAME) $(LIBS)
+	@echo "\033[0;31mCleaning libft..."
+	@make clean -C libft/
+	@echo "\nRemoving binaries..."
+	@rm -f $(OBJ)
+	@echo "\033[0m"
 
-re:			fclean all
+fclean:
+	@echo "\033[0;31mCleaning libft..."
+	@make fclean -C libft/
+	@echo "\nDeleting objects..."
+	@rm -f $(OBJ)
+	@echo "\nDeleting executable..."
+	@rm -f $(NAME)
+	@echo "\033[0m"
+
+re: fclean all
+
+test: all
+	./minishell
 
 norm:
-	norminette $(SRCS) includes/$(HEADER)
+	norminette $(SRC) includes/$(HEADER)
 
-.PHONY: all clean fclean re norm
+.PHONY: clean fclean re test norm

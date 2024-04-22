@@ -1,33 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mawada <mawada@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/08 16:31:01 by mawada            #+#    #+#             */
-/*   Updated: 2024/04/22 15:58:35 by mawada           ###   ########.fr       */
+/*   Created: 2024/04/22 15:26:14 by mawada            #+#    #+#             */
+/*   Updated: 2024/04/22 15:55:00 by mawada           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-t_sig	g_sig;
-
-int	main(int ac, char **av, char **envp)
+int		ft_env(t_env *env)
 {
-	t_minishell	minishell;
-	(void)ac;
-	(void)av;
-	minishell.in = dup(STDIN);
-	minishell.out = dup(STDOUT);
-	minishell.exit = 0;
-	minishell.ret = 0;
-	minishell.no_exec = 0;
-	setup_signals();
-	env_init(&minishell, envp);
-	while (minishell.exit == 0)
+	while (env && env->next != NULL)
 	{
-		parse(&minishell);
+		ft_putendl_fd(env->value, STDOUT);
+		env = env->next;
 	}
+	if (env)
+		ft_putendl_fd(env->value, STDOUT);
+	return (SUCCESS);
 }
