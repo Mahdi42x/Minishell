@@ -1,24 +1,73 @@
-Mahdi:
 
-Ordner erstellt.
-verlinkung zu Github erstellt.
-readme erstellt.
-c files erstellt.
-h file erstellt.
-makefile erstellt.
+Minishell-Projektprotokoll
+
+Datum: 23. April 2024
+
+Teilnehmer: Mahdi Awada, Emir Kalkan
+
+Überblick über das Projekt:
+
+Das Minishell-Projekt hat zum Ziel,
+eine einfache Unix-Shell in C zu implementieren,
+die grundlegende Befehle wie cd, env, exit sowie die Ausführung von externen Programmen unterstützt.
+Das Projekt befindet sich derzeit in der Entwicklungsphase, und verschiedene Funktionen wurden bereits implementiert.
 
 
-checkliste:
-	Prompt; 	--Ready
-	history;	--Ready
-	Signale;	--Ready
-	Tokens;		--in work...
+Besprechung der einzelnen Funktionen:
 
-	to-do's:
-		*parsing;
-		*expanding;
-		*executing;
-		*memory-handling;
-		*error handling;
-	clean: 
-			remove unnecessary files (e.g., .o);
+---minishell.c
+Die main-Funktion initialisiert die Shell und ruft die notwendigen Funktionen zur Einrichtung von Signalhandlern und Umgebungsvariablen auf.
+Diskussion über die Struktur der Hauptfunktion und die Verwendung von globalen Variablen.
+
+---signal.c
+Die Funktion setup_signals konfiguriert die Signalbehandlung für SIGINT und SIGQUIT, um die Shell-Interaktion zu steuern.
+Überprüfung der Implementierung der Signalhandler und deren Auswirkungen auf die Benutzerinteraktion.
+
+---env.c
+Die Funktionen env_init und secret_env_init initialisieren die Umgebungsvariablen der Shell aus dem envp-Array.
+Bewertung der Speicherung und Verwaltung von Umgebungsvariablen sowie potenzieller Sicherheitsprobleme.
+
+---shlvl.c
+Die Funktion increment_shell_level inkrementiert den Wert der Umgebungsvariablen SHLVL bei jeder Ausführung der Shell.
+Diskussion über die Bedeutung des Shell-Levels und dessen Auswirkungen auf die Umgebungsvariablen.
+
+---line.c, tokens.c, parsing.c
+Die Funktionen zur Zeilenanalyse, Tokenisierung und Parsing sind grundlegend für die Verarbeitung von Benutzereingaben.
+Überprüfung der Implementierung auf die Handhabung von Zitaten, Leerzeichen und speziellen Zeichen.
+
+
+Fehlerbehandlung und Tests:
+
+Diskussion über die Fehlerbehandlungsroutinen und geplante Testszenarien.
+Identifizierung potenzieller Schwachstellen im Code und Strategien zur Verbesserung der Robustheit.
+
+Nächste Schritte:
+
+Implementierung der Ausführung von Befehlen und der Behandlung von Ein- und Ausgabeumleitungen.
+Entwurf von Testszenarien für die Überprüfung der Funktionalitäten der Shell.
+Festlegung eines Zeitplans für die Fertigstellung des nächsten Meilensteins.
+Dieses Protokoll bietet einen detaillierten Überblick über das Minishell-Projekt sowie die Diskussion über die einzelnen Funktionen und die geplanten nächsten Schritte. Es dient als Leitfaden für die weitere Entwicklung des Projekts und als Referenz für zukünftige Besprechungen und Entscheidungen.
+
+
+Protokolleintrag für die Funktion type_arg:
+
+Datum: 23. April 2024
+
+Teilnehmer: Mahdi Awada, Emir Kalkan
+
+Überblick über die Funktion:
+
+Die Funktion type_arg ist verantwortlich für die Bestimmung des Typs eines Tokens basierend auf seinem Inhalt und der aktuellen Position im Tokenstream. Sie wird während des Parsing-Prozesses der Benutzereingabe aufgerufen, um jedem Token einen entsprechenden Typ zuzuweisen.
+
+Diskussion über die Implementierung:
+
+Die Funktion überprüft zunächst, ob das Token eine leere Zeichenkette ist und weist ihm in diesem Fall den Typ EMPTY zu.
+Anschließend wird überprüft, ob das Token einem der bekannten Trennzeichen entspricht (>, >>, <, |, ;) und ob es sich nicht um einen Separator zwischen Befehlen handelt (separator == 0).
+Basierend auf diesen Bedingungen wird der entsprechende Typ des Tokens zugewiesen:
+TRUNC: Für das Trennzeichen >
+APPEND: Für das Trennzeichen >>
+INPUT: Für das Trennzeichen <
+PIPE: Für das Trennzeichen |
+END: Für das Trennzeichen ;
+Wenn das Token nicht einem der oben genannten Trennzeichen entspricht und entweder das erste Token im Tokenstream ist oder das vorherige Token ein Trennzeichen mit höherer Priorität ist (token->prev->type >= TRUNC), wird ihm der Typ CMD zugewiesen.
+In allen anderen Fällen wird dem Token der Typ ARG zugewiesen.

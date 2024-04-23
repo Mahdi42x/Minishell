@@ -6,13 +6,13 @@
 /*   By: mawada <mawada@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 12:14:03 by mawada            #+#    #+#             */
-/*   Updated: 2024/04/22 15:59:12 by mawada           ###   ########.fr       */
+/*   Updated: 2024/04/23 15:38:10 by mawada           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int		quote_check(t_minishell *minishell, char **line)
+int	quote_check(t_minishell *minishell, char **line)
 {
 	if (quotes(*line, 2147483647))
 	{
@@ -28,6 +28,7 @@ int		quote_check(t_minishell *minishell, char **line)
 void	parse(t_minishell *minishell)
 {
 	t_token	*token;
+	t_token	*current;
 
 	minishell->line = readline("\033[0;36m\033[1mMinishell ▸ \033[0m");
 	add_history(minishell->line);
@@ -35,14 +36,14 @@ void	parse(t_minishell *minishell)
 	{
 		ft_putendl_fd("exit", STDERR);
 		minishell->exit = 1;
-		return;
+		return ;
 	}
 	if (ft_strcmp(minishell->line, "env") == 0)
 		ft_env(minishell->env); //kommt noch woanders hin
 	if (quote_check(minishell, &minishell->line))
 		return ;
 	token = tokenize(minishell->line);
-	t_token *current = token;
+	current = token;
 	while (current != NULL)
 	{
 		printf("%s (Type: %d)\n", current->str, current->type);

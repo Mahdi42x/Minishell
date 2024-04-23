@@ -13,9 +13,9 @@ HEADER = minishell.h
 
 MAIN = minishell signal
 PARSING = line tokens
-ENV = env
+ENV = env shlvl get_env sort_env
 EXEC =
-BUILTINS = env
+BUILTINS = env export
 TOOLS = free parsing type
 
 SRC = $(addsuffix .c, $(addprefix srcs/main/, $(MAIN))) \

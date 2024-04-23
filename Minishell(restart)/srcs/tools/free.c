@@ -6,7 +6,7 @@
 /*   By: mawada <mawada@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 14:26:35 by mawada            #+#    #+#             */
-/*   Updated: 2024/04/20 14:55:30 by mawada           ###   ########.fr       */
+/*   Updated: 2024/04/23 14:10:20 by mawada           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	free_token(t_token *start)
 {
-	t_token *temp;
+	t_token	*temp;
 
 	while (start != NULL)
 	{

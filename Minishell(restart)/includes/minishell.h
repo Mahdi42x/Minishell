@@ -6,7 +6,7 @@
 /*   By: mawada <mawada@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 15:17:46 by mawada            #+#    #+#             */
-/*   Updated: 2024/04/22 15:56:05 by mawada           ###   ########.fr       */
+/*   Updated: 2024/04/23 15:41:56 by mawada           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@
 # define STDOUT 1
 # define STDERR 2
 
+# define BUFF_SIZE 4096
+# define ERROR 1
 # define SUCCESS 0
 
 typedef struct s_token
@@ -55,6 +57,7 @@ typedef struct s_minishell
 {
 	t_token			*start;
 	t_env			*env;
+	t_env			*secret_env;
 	int				exit;
 	int				ret;
 	int				no_exec;

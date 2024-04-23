@@ -6,13 +6,13 @@
 /*   By: mawada <mawada@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 14:26:40 by mawada            #+#    #+#             */
-/*   Updated: 2024/04/19 18:01:42 by mawada           ###   ########.fr       */
+/*   Updated: 2024/04/23 14:10:31 by mawada           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int		quotes(char *line, int index)
+int	quotes(char *line, int index)
 {
 	int	i;
 	int	open;
@@ -35,4 +35,3 @@ int		quotes(char *line, int index)
 	}
 	return (open);
 }
-
