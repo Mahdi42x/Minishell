@@ -6,7 +6,7 @@
 /*   By: mawada <mawada@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 12:14:03 by mawada            #+#    #+#             */
-/*   Updated: 2024/04/23 15:38:10 by mawada           ###   ########.fr       */
+/*   Updated: 2024/04/24 17:03:18 by mawada           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	parse(t_minishell *minishell)
 		ft_env(minishell->env); //kommt noch woanders hin
 	if (quote_check(minishell, &minishell->line))
 		return ;
-	token = tokenize(minishell->line);
+	token = get_tokens(minishell->line);
 	current = token;
 	while (current != NULL)
 	{

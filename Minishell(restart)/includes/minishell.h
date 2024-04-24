@@ -6,7 +6,7 @@
 /*   By: mawada <mawada@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 15:17:46 by mawada            #+#    #+#             */
-/*   Updated: 2024/04/23 15:41:56 by mawada           ###   ########.fr       */
+/*   Updated: 2024/04/24 17:02:43 by mawada           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,17 @@
 # define STDOUT 1
 # define STDERR 2
 
+# define SKIP 1
+# define NOSKIP 0
+
 # define BUFF_SIZE 4096
+# define EXPANSION -36
 # define ERROR 1
 # define SUCCESS 0
+# define IS_DIRECTORY 126
+# define UNKNOWN_COMMAND 127
 
-typedef struct s_token
+typedef struct	s_token
 {
 	char			*str;
 	int				type;
@@ -47,23 +53,31 @@ typedef struct s_token
 	struct s_token	*next;
 }				t_token;
 
-typedef struct s_env
+typedef struct	s_env
 {
 	char			*value;
 	struct s_env	*next;
 }				t_env;
 
-typedef struct s_minishell
+typedef struct	s_minishell
 {
 	t_token			*start;
 	t_env			*env;
 	t_env			*secret_env;
-	int				exit;
-	int				ret;
-	int				no_exec;
+	char			*line;
 	int				in;
 	int				out;
-	char			*line;
+	int				fdin;
+	int				fdout;
+	int				pipin;
+	int				pipout;
+	int				pid;
+	int				charge;
+	int				parent;
+	int				last;
+	int				ret;
+	int				exit;
+	int				no_exec;
 }				t_minishell;
 
 typedef struct	s_sig
@@ -71,8 +85,15 @@ typedef struct	s_sig
 	int				sigint;
 	int				sigquit;
 	int				exit_status;
-	int				pid;
+	pid_t			pid;
 }				t_sig;
+
+typedef struct	s_expansions
+{
+	char			*new_arg;
+	int				i;
+	int				j;
+}				t_expansions;
 
 /*
 ** MINISHELL
@@ -108,9 +129,13 @@ void			mini_exit(t_minishell *minishell, char **cmd);
 ** PARSING
 */
 void			parse(t_minishell *minishell);
+t_token			*get_tokens(char *line);
+void			squish_args(t_minishell *minishell);
+int				is_last_valid_arg(t_token *token);
 int				quotes(char *line, int index);
-t_token			*tokenize(const char *line);
-
+void			type_arg(t_token *token, int separator);
+int				is_sep(char *line, int i);
+int				ignore_sep(char *line, int i);
 
 /*
 ** ENV
@@ -146,7 +171,9 @@ void			free_tab(char **tab);
 /*
 ** TOKEN TOOLS
 */
-
+t_token			*next_sep(t_token *token, int skip);
+t_token			*prev_sep(t_token *token, int skip);
+t_token			*next_run(t_token *token, int skip);
 
 /*
 ** TYPE TOOLS
@@ -170,4 +197,5 @@ char			*get_var_value(const char *arg, int pos, t_env *env, int ret);
 */
 void	setup_signals(void);
 
+extern t_sig g_sig;
 #endif

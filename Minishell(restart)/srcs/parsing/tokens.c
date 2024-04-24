@@ -6,7 +6,7 @@
 /*   By: mawada <mawada@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/18 14:18:03 by cclaude           #+#    #+#             */
-/*   Updated: 2024/04/23 15:39:45 by mawada           ###   ########.fr       */
+/*   Updated: 2024/04/24 17:09:56 by mawada           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,40 +32,115 @@ void	type_arg(t_token *token, int separator)
 		token->type = ARG;
 }
 
-t_token	*tokenize(const char *line)
-{
-	t_token	*head;
-	t_token	*current;
-	t_token	*token;
-	int		index;
-	int		start;
 
-	head = NULL;
-	current = NULL;
-	index = 0;
-	start = 0;
-	while (line[index] != '\0')
+void	squish_args(t_minishell *minishell)
+{
+	t_token	*token;
+	t_token	*prev;
+
+	token = minishell->start;
+	while (token)
 	{
-		while (line[index] == ' ')
-			index++;
-		start = index;
-		while (line[index] != ' ' && line[index] != '\0')
-			index++;
-		if (index > start)
+		prev = prev_sep(token, NOSKIP);
+		if (is_type(token, ARG) && is_types(prev, "TAI"))
 		{
-			token = (t_token *)malloc(sizeof(t_token));
-			token->str = (char *)malloc((index - start + 1) * sizeof(char));
-			memcpy(token->str, &line[start], index - start);
-			token->str[index - start] = '\0';
-			type_arg(token, 0);
-			token->prev = current;
-			token->next = NULL;
-			if (head == NULL)
-				head = token;
-			else
-				current->next = token;
-			current = token;
+			while (is_last_valid_arg(prev) == 0)
+				prev = prev->prev;
+			token->prev->next = token->next;
+			if (token->next)
+				token->next->prev = token->prev;
+			token->prev = prev;
+			token->next = (prev) ? prev->next : minishell->start;
+			prev = (prev) ? prev : token;
+			prev->next->prev = token;
+			prev->next = (minishell->start->prev) ? prev->next : token;
+			minishell->start = (minishell->start->prev) ? minishell->start->prev : minishell->start;
 		}
+		token = token->next;
 	}
-	return (head);
+}
+
+int		next_alloc(char *line, int *i)
+{
+	int		count;
+	int		j;
+	char	c;
+
+	count = 0;
+	j = 0;
+	c = ' ';
+	while (line[*i + j] && (line[*i + j] != ' ' || c != ' '))
+	{
+		if (c == ' ' && (line[*i + j] == '\'' || line[*i + j] == '\"'))
+			c = line[*i + j++];
+		else if (c != ' ' && line[*i + j] == c)
+		{
+			count += 2;
+			c = ' ';
+			j++;
+		}
+		else
+			j++;
+		if (line[*i + j - 1] == '\\')
+			count--;
+	}
+	return (j - count + 1);
+}
+
+t_token	*next_token(char *line, int *i)
+{
+	t_token	*token;
+	int		j;
+	char	c;
+
+	j = 0;
+	c = ' ';
+	if (!(token = malloc(sizeof(t_token)))
+	|| !(token->str = malloc(sizeof(char) * next_alloc(line, i))))
+		return (NULL);
+	while (line[*i] && (line[*i] != ' ' || c != ' '))
+	{
+		if (c == ' ' && (line[*i] == '\'' || line[*i] == '\"'))
+			c = line[(*i)++];
+		else if (c != ' ' && line[*i] == c)
+		{
+			c = ' ';
+			(*i)++;
+		}
+		else if (line[*i] == '\\' && (*i)++)
+			token->str[j++] = line[(*i)++];
+		else
+			token->str[j++] = line[(*i)++];
+	}
+	token->str[j] = '\0';
+	return (token);
+}
+
+t_token	*get_tokens(char *line)
+{
+	t_token	*prev;
+	t_token	*next;
+	int		i;
+	int		sep; 
+
+	prev = NULL;
+	next = NULL;
+	i = 0;
+	ft_skip_space(line, &i);
+	while (line[i])
+	{
+		sep = ignore_sep(line, i);
+		next = next_token(line, &i);
+		next->prev = prev;
+		if (prev)
+			prev->next = next;
+		prev = next;
+		type_arg(next, sep);
+		ft_skip_space(line, &i);
+	}
+	if (next)
+		next->next = NULL;
+	while (next && next->prev)
+		next = next->prev;
+	return (next);
 }
