@@ -6,7 +6,7 @@
 /*   By: mawada <mawada@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 17:48:35 by mawada            #+#    #+#             */
-/*   Updated: 2024/04/24 13:35:45 by mawada           ###   ########.fr       */
+/*   Updated: 2024/04/29 18:01:35 by mawada           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	is_type(t_token *token, int type)
 		return (0);
 }
 
-int		is_types(t_token *token, char *types)
+int	is_types(t_token *token, char *types)
 {
 	if (ft_strchr(types, ' ') && is_type(token, EMPTY))
 		return (1);
@@ -32,6 +32,8 @@ int		is_types(t_token *token, char *types)
 		return (1);
 	else if (ft_strchr(types, 'A') && is_type(token, APPEND))
 		return (1);
+	else if (ft_strchr(types, 'Z') && is_type(token, OTHER_APPEND))
+		return (1);
 	else if (ft_strchr(types, 'I') && is_type(token, INPUT))
 		return (1);
 	else if (ft_strchr(types, 'P') && is_type(token, PIPE))
@@ -41,7 +43,7 @@ int		is_types(t_token *token, char *types)
 	return (0);
 }
 
-int		has_type(t_token *token, int type)
+int	has_type(t_token *token, int type)
 {
 	while (token)
 	{
@@ -52,7 +54,7 @@ int		has_type(t_token *token, int type)
 	return (0);
 }
 
-int		has_pipe(t_token *token)
+int	has_pipe(t_token *token)
 {
 	while (token && is_type(token, END) == 0)
 	{

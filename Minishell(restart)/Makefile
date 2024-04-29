@@ -16,7 +16,7 @@ PARSING = line tokens
 ENV = env shlvl get_env sort_env
 EXEC =
 BUILTINS = env export
-TOOLS = free parsing type token
+TOOLS = free parsing type token fd
 
 SRC = $(addsuffix .c, $(addprefix srcs/main/, $(MAIN))) \
 	  $(addsuffix .c, $(addprefix srcs/parsing/, $(PARSING))) \

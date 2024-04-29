@@ -6,7 +6,7 @@
 /*   By: mawada <mawada@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 14:26:40 by mawada            #+#    #+#             */
-/*   Updated: 2024/04/24 13:44:55 by mawada           ###   ########.fr       */
+/*   Updated: 2024/04/29 18:02:22 by mawada           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,10 @@ int		check_line(t_minishell *minishell, t_token *token)
 		&& (!token->next || is_types(token->next, "TAIPE")))
 		{
 			ft_putstr_fd("bash: syntax error near unexpected token `", STDERR);
-			token->next ? ft_putstr_fd(token->next->str, STDERR) : 0;
-			token->next ? 0 : ft_putstr_fd("newline", STDERR);
+			if (token->next)
+				ft_putstr_fd(token->next->str, STDERR);
+			else
+				ft_putstr_fd("newline", STDERR);
 			ft_putendl_fd("'", STDERR);
 			minishell->ret = 258;
 			return (0);

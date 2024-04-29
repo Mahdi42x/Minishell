@@ -6,7 +6,7 @@
 /*   By: mawada <mawada@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/18 14:18:03 by cclaude           #+#    #+#             */
-/*   Updated: 2024/04/24 17:09:56 by mawada           ###   ########.fr       */
+/*   Updated: 2024/04/29 18:01:18 by mawada           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ void	type_arg(t_token *token, int separator)
 		token->type = TRUNC;
 	else if (ft_strcmp(token->str, ">>") == 0 && separator == 0)
 		token->type = APPEND;
+	else if (ft_strcmp(token->str, "<<") == 0 && separator == 0)
+		token->type = OTHER_APPEND;
 	else if (ft_strcmp(token->str, "<") == 0 && separator == 0)
 		token->type = INPUT;
 	else if (ft_strcmp(token->str, "|") == 0 && separator == 0)
@@ -50,11 +52,23 @@ void	squish_args(t_minishell *minishell)
 			if (token->next)
 				token->next->prev = token->prev;
 			token->prev = prev;
-			token->next = (prev) ? prev->next : minishell->start;
-			prev = (prev) ? prev : token;
+			if (prev)
+				token->next = prev->next;
+			else
+				token->next = minishell->start;
+			if (!prev)
+				prev = token;
 			prev->next->prev = token;
-			prev->next = (minishell->start->prev) ? prev->next : token;
-			minishell->start = (minishell->start->prev) ? minishell->start->prev : minishell->start;
+			if (minishell->start->prev)
+			{
+				prev->next = prev->next;
+				minishell->start = minishell->start->prev;
+			}
+			else
+			{
+				prev->next = token;
+				minishell->start = minishell->start;
+			}
 		}
 		token = token->next;
 	}
@@ -95,7 +109,8 @@ t_token	*next_token(char *line, int *i)
 
 	j = 0;
 	c = ' ';
-	if (!(token = malloc(sizeof(t_token)))
+	token = malloc(sizeof(t_token));
+	if (!(token)
 	|| !(token->str = malloc(sizeof(char) * next_alloc(line, i))))
 		return (NULL);
 	while (line[*i] && (line[*i] != ' ' || c != ' '))

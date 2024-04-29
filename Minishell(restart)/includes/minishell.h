@@ -6,7 +6,7 @@
 /*   By: mawada <mawada@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 15:17:46 by mawada            #+#    #+#             */
-/*   Updated: 2024/04/24 17:02:43 by mawada           ###   ########.fr       */
+/*   Updated: 2024/04/29 17:51:30 by mawada           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # define ARG 2
 # define TRUNC 3
 # define APPEND 4
+# define OTHER_APPEND 8
 # define INPUT 5
 # define PIPE 6
 # define END 7
@@ -45,7 +46,7 @@
 # define IS_DIRECTORY 126
 # define UNKNOWN_COMMAND 127
 
-typedef struct	s_token
+typedef struct s_token
 {
 	char			*str;
 	int				type;
@@ -53,13 +54,13 @@ typedef struct	s_token
 	struct s_token	*next;
 }				t_token;
 
-typedef struct	s_env
+typedef struct s_env
 {
 	char			*value;
 	struct s_env	*next;
 }				t_env;
 
-typedef struct	s_minishell
+typedef struct s_minishell
 {
 	t_token			*start;
 	t_env			*env;
@@ -80,7 +81,7 @@ typedef struct	s_minishell
 	int				no_exec;
 }				t_minishell;
 
-typedef struct	s_sig
+typedef struct s_sig
 {
 	int				sigint;
 	int				sigquit;
@@ -88,7 +89,7 @@ typedef struct	s_sig
 	pid_t			pid;
 }				t_sig;
 
-typedef struct	s_expansions
+typedef struct s_expansions
 {
 	char			*new_arg;
 	int				i;
@@ -128,7 +129,7 @@ void			mini_exit(t_minishell *minishell, char **cmd);
 /*
 ** PARSING
 */
-void			parse(t_minishell *minishell);
+void			parse(t_minishell *minishell, t_token *token);
 t_token			*get_tokens(char *line);
 void			squish_args(t_minishell *minishell);
 int				is_last_valid_arg(t_token *token);
@@ -195,7 +196,6 @@ char			*get_var_value(const char *arg, int pos, t_env *env, int ret);
 /*
 ** SIGNAL
 */
-void	setup_signals(void);
+void			setup_signals(void);
 
-extern t_sig g_sig;
 #endif
