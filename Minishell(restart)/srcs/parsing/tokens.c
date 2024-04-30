@@ -6,7 +6,7 @@
 /*   By: mawada <mawada@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/18 14:18:03 by cclaude           #+#    #+#             */
-/*   Updated: 2024/04/29 18:01:18 by mawada           ###   ########.fr       */
+/*   Updated: 2024/04/30 14:31:47 by mawada           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	type_arg(t_token *token, int separator)
 	else if (ft_strcmp(token->str, ">>") == 0 && separator == 0)
 		token->type = APPEND;
 	else if (ft_strcmp(token->str, "<<") == 0 && separator == 0)
-		token->type = OTHER_APPEND;
+		token->type = DOUBLE_INPUT;
 	else if (ft_strcmp(token->str, "<") == 0 && separator == 0)
 		token->type = INPUT;
 	else if (ft_strcmp(token->str, "|") == 0 && separator == 0)
@@ -44,7 +44,7 @@ void	squish_args(t_minishell *minishell)
 	while (token)
 	{
 		prev = prev_sep(token, NOSKIP);
-		if (is_type(token, ARG) && is_types(prev, "TAI"))
+		if (is_type(token, ARG) && is_types(prev, "TAID"))
 		{
 			while (is_last_valid_arg(prev) == 0)
 				prev = prev->prev;

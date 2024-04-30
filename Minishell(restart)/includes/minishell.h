@@ -6,7 +6,7 @@
 /*   By: mawada <mawada@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 15:17:46 by mawada            #+#    #+#             */
-/*   Updated: 2024/04/29 17:51:30 by mawada           ###   ########.fr       */
+/*   Updated: 2024/04/30 12:10:19 by mawada           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <dirent.h>
 # include <errno.h>
 # include <limits.h>
+# include <sys/types.h>
 # include "../libft/libft.h"
 # include <readline/readline.h>
 # include <readline/history.h>
@@ -27,7 +28,7 @@
 # define ARG 2
 # define TRUNC 3
 # define APPEND 4
-# define OTHER_APPEND 8
+# define DOUBLE_INPUT 8
 # define INPUT 5
 # define PIPE 6
 # define END 7

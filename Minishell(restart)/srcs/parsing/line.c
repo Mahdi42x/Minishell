@@ -6,7 +6,7 @@
 /*   By: mawada <mawada@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 12:14:03 by mawada            #+#    #+#             */
-/*   Updated: 2024/04/29 11:54:47 by mawada           ###   ########.fr       */
+/*   Updated: 2024/04/30 14:28:46 by mawada           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ char	*space_line(char *line)
 			new[j++] = ' ';
 			new[j++] = line[i++];
 			if (quotes(line, i) == 0 && line[i] == '>')
+				new[j++] = line[i++];
+			else if (quotes(line, i) == 0 && line[i] == '<')
 				new[j++] = line[i++];
 			new[j++] = ' ';
 		}

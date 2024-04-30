@@ -6,7 +6,7 @@
 /*   By: mawada <mawada@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 17:48:35 by mawada            #+#    #+#             */
-/*   Updated: 2024/04/29 18:01:35 by mawada           ###   ########.fr       */
+/*   Updated: 2024/04/30 11:51:17 by mawada           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	is_types(t_token *token, char *types)
 		return (1);
 	else if (ft_strchr(types, 'A') && is_type(token, APPEND))
 		return (1);
-	else if (ft_strchr(types, 'Z') && is_type(token, OTHER_APPEND))
+	else if (ft_strchr(types, 'D') && is_type(token, DOUBLE_INPUT))
 		return (1);
 	else if (ft_strchr(types, 'I') && is_type(token, INPUT))
 		return (1);
