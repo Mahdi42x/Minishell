@@ -10,36 +10,56 @@
 #                                                                              #
 # **************************************************************************** #
 
-SRCS			=	ft_isalnum.c ft_isprint.c ft_memcmp.c  ft_putchar_fd.c ft_split.c \
-					ft_strlcat.c ft_strcmp.c ft_strncmp.c ft_substr.c ft_atoi.c ft_isalpha.c \
-					ft_itoa.c ft_memcpy.c ft_memdel.c ft_putendl_fd.c ft_strchr.c  ft_strlcpy.c \
-					ft_strnstr.c ft_tolower.c ft_bzero.c   ft_isascii.c \
-					ft_memmove.c ft_putnbr_fd.c  ft_strdup.c ft_striteri.c ft_strlen.c  ft_strrchr.c \
-					ft_toupper.c ft_calloc.c  ft_isdigit.c ft_memchr.c  ft_memset.c  \
-					ft_putstr_fd.c  ft_strjoin.c ft_strmapi.c ft_strtrim.c \
-					ft_printf.c print_command.c print_command_2.c get_next_line.c get_next_line_utils.c\
-					ft_skip/ft_skip_char.c ft_skip/ft_skip_chars.c ft_skip/ft_skip_space.c\
-					ft_skip/ft_skip_spacenl.c ft_isin.c
+NAME = libft.a
 
-B_SRC			=	ft_lstadd_back.c ft_lstadd_front.c ft_lstclear.c \
-					ft_lstdelone.c ft_lstiter.c ft_lstlast.c \
-					ft_lstmap.c ft_lstnew.c ft_lstsize.c
-					
-OBJS			= $(SRCS:.c=.o)
+CC = cc
 
-B_OBJS			= $(B_SRC:.c=.o)
+CFLAGS = -Wall -Wextra -Werror -I includes/
 
-HEADER			= libft.h
+HEADER = $(addsuffix .h, $(addprefix includes/, libutils get_next_line ft_printf))
 
-CC			= cc
-RM			= rm -f
-CFLAGS			= -Wall -Wextra -Werror
+FTIS = alnum alpha ascii count digit in print space spacenl where
 
-NAME			= libft.a
+FTSKIP = space spacenl char chars
 
-all:			$(NAME) $(bonus)
+FTLST = add_back add_front clear delone iter last map new size
 
-$(NAME): $(OBJS)
+FTMATH = abs nbrlen hexlen baselen power
+
+FTMEM = bzero calloc memccpy memchr memcmp memcpy memdel memmove memset
+
+FTPUT = char endl nbr str char_fd endl_fd nbr_fd str_fd
+
+FTSTR = chr cmp dup isnum join lcat lcpy len mapi ncmp nstr rchr trim
+
+FTSUB = ft_str/ft_substr ft_str/ft_split
+
+FTTO = tolower toupper atoi itoa
+
+FTEX = gnl/get_next_line printf/ft_printf
+
+FTPRF = command command_2
+
+FTGNL = utils
+
+SRC = $(addsuffix .c, $(addprefix ft_is/ft_is, $(FTIS))) \
+	$(addsuffix .c, $(addprefix ft_lst/ft_lst, $(FTLST))) \
+	$(addsuffix .c, $(addprefix ft_math/ft_, $(FTMATH))) \
+	$(addsuffix .c, $(addprefix ft_mem/ft_, $(FTMEM))) \
+	$(addsuffix .c, $(addprefix ft_put/ft_put, $(FTPUT))) \
+	$(addsuffix .c, $(addprefix ft_skip/ft_skip_, $(FTSKIP))) \
+	$(addsuffix .c, $(addprefix ft_str/ft_str, $(FTSTR)) $(FTSUB)) \
+	$(addsuffix .c, $(addprefix ft_to/ft_, $(FTTO))) \
+	$(addsuffix .c, $(addprefix ft_, $(FTEX))) \
+	$(addsuffix .c, $(addprefix ft_printf/print_, $(FTPRF))) \
+	$(addsuffix .c, $(addprefix ft_gnl/get_next_line_, $(FTGNL))) \
+
+OBJ = $(SRC:.c=.o)
+
+all: $(NAME)
+
+
+$(NAME): $(OBJ)
 	@echo "\n\n\033[0;32mCompiling libft..."
 	@ar rc $(NAME) $^
 	@ranlib $(NAME)
@@ -48,20 +68,16 @@ $(NAME): $(OBJS)
 %.o: %.c
 	@printf "\033[0;33mGenerating libft objects... %-33.33s\r" $@
 	@${CC} ${CFLAGS} -c $< -o $@
-			
-bonus:			$(B_OBJS)
-			ar rc $(NAME) $(B_OBJS)
-			ranlib $(NAME)
 
 clean:
-			$(RM) $(OBJS) $(B_OBJS)
+	@rm -f $(OBJ)
 
-fclean:			clean
-			$(RM) $(NAME) $(bonus)
+fclean: clean
+	@rm -f $(NAME)
 
-re:			fclean $(NAME)
+re: fclean all
 
 norm:
-	norminette $(SRCS) $(HEADER)
+	norminette $(SRC) $(HEADER)
 
-.PHONY:			all clean fclean re norm
+.PHONY: all clean fclean re norm

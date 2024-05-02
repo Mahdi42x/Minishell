@@ -1,20 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_skip_space.c                                    :+:      :+:    :+:   */
+/*   ft_power.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mawada <mawada@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/18 16:53:10 by mawada            #+#    #+#             */
-/*   Updated: 2024/04/22 12:42:49 by mawada           ###   ########.fr       */
+/*   Created: 2024/05/02 12:14:56 by mawada            #+#    #+#             */
+/*   Updated: 2024/05/02 12:36:48 by mawada           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_skip_space(const char *str, int *i)
+int	ft_power(int nbr, int pow)
 {
-	while ((str[*i] == ' ' || str[*i] == '\t')
-		|| (str[*i] == '\r' || str[*i] == '\v' || str[*i] == '\f'))
-		(*i)++;
+	int	res;
+
+	if (pow == 0)
+		return (1);
+	res = nbr;
+	while (pow > 1)
+	{
+		res *= nbr;
+		pow--;
+	}
+	return (res);
 }

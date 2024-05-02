@@ -1,20 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_skip_space.c                                    :+:      :+:    :+:   */
+/*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mawada <mawada@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/18 16:53:10 by mawada            #+#    #+#             */
-/*   Updated: 2024/04/22 12:42:49 by mawada           ###   ########.fr       */
+/*   Created: 2023/11/28 16:35:18 by mawada            #+#    #+#             */
+/*   Updated: 2023/12/10 15:24:27 by mawada           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef GET_NEXT_LINE_H
+# define GET_NEXT_LINE_H
 
-void	ft_skip_space(const char *str, int *i)
-{
-	while ((str[*i] == ' ' || str[*i] == '\t')
-		|| (str[*i] == '\r' || str[*i] == '\v' || str[*i] == '\f'))
-		(*i)++;
-}
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 42
+# endif
+
+# include <stdlib.h>
+# include <unistd.h>
+# include <fcntl.h>
+
+char	*get_next_line(int fd);
+
+size_t	gft_strlen(const char *s);
+
+char	*gft_substr(char const *s, unsigned int start, size_t len);
+
+char	*gft_strjoin(char const *s1, char const *s2);
+
+char	*gft_strchr(const char *s, int c);
+
+#endif

@@ -1,20 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_skip_space.c                                    :+:      :+:    :+:   */
+/*   ft_abs.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mawada <mawada@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/18 16:53:10 by mawada            #+#    #+#             */
-/*   Updated: 2024/04/22 12:42:49 by mawada           ###   ########.fr       */
+/*   Created: 2024/05/02 12:14:27 by mawada            #+#    #+#             */
+/*   Updated: 2024/05/02 12:37:06 by mawada           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_skip_space(const char *str, int *i)
+int	ft_abs(long n)
 {
-	while ((str[*i] == ' ' || str[*i] == '\t')
-		|| (str[*i] == '\r' || str[*i] == '\v' || str[*i] == '\f'))
-		(*i)++;
+	if (n < 0)
+		return (-n);
+	else
+		return (n);
 }

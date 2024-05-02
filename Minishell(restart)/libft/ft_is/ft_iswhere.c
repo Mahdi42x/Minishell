@@ -1,20 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_skip_space.c                                    :+:      :+:    :+:   */
+/*   ft_iswhere.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mawada <mawada@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/18 16:53:10 by mawada            #+#    #+#             */
-/*   Updated: 2024/04/22 12:42:49 by mawada           ###   ########.fr       */
+/*   Created: 2024/05/02 12:12:37 by mawada            #+#    #+#             */
+/*   Updated: 2024/05/02 12:12:39 by mawada           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_skip_space(const char *str, int *i)
+int	ft_iswhere(int c, char *base)
 {
-	while ((str[*i] == ' ' || str[*i] == '\t')
-		|| (str[*i] == '\r' || str[*i] == '\v' || str[*i] == '\f'))
-		(*i)++;
+	int	i;
+
+	i = 0;
+	while (base[i] != '\0')
+	{
+		if (base[i] == c)
+			return (i);
+		i++;
+	}
+	return (-1);
 }

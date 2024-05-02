@@ -1,20 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_skip_space.c                                    :+:      :+:    :+:   */
+/*   ft_baselen.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mawada <mawada@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/18 16:53:10 by mawada            #+#    #+#             */
-/*   Updated: 2024/04/22 12:42:49 by mawada           ###   ########.fr       */
+/*   Created: 2024/05/02 12:14:40 by mawada            #+#    #+#             */
+/*   Updated: 2024/05/02 12:36:58 by mawada           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_skip_space(const char *str, int *i)
+int	ft_baselen(long n, int base)
 {
-	while ((str[*i] == ' ' || str[*i] == '\t')
-		|| (str[*i] == '\r' || str[*i] == '\v' || str[*i] == '\f'))
-		(*i)++;
+	int		size;
+
+	size = 0;
+	if (base < 2)
+		return (0);
+	if (n == 0)
+		return (1);
+	if (n < 0)
+		size++;
+	while (n != 0)
+	{
+		n = n / base;
+		size++;
+	}
+	return (size);
 }
