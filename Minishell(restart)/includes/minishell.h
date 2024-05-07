@@ -6,7 +6,7 @@
 /*   By: mawada <mawada@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 15:17:46 by mawada            #+#    #+#             */
-/*   Updated: 2024/05/02 12:39:47 by mawada           ###   ########.fr       */
+/*   Updated: 2024/05/07 14:58:12 by mawada           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <errno.h>
 # include <limits.h>
 # include <sys/types.h>
+# include <sys/wait.h>
 # include "libft.h"
 # include <readline/readline.h>
 # include <readline/history.h>
@@ -198,5 +199,7 @@ char			*get_var_value(const char *arg, int pos, t_env *env, int ret);
 ** SIGNAL
 */
 void			setup_signals(void);
+
+extern t_sig	g_sig;
 
 #endif

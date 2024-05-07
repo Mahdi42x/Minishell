@@ -6,7 +6,7 @@
 /*   By: mawada <mawada@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 15:28:57 by mawada            #+#    #+#             */
-/*   Updated: 2024/04/22 12:36:52 by mawada           ###   ########.fr       */
+/*   Updated: 2024/05/07 15:04:28 by mawada           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,4 +128,5 @@ void	ft_skip_char(const char *str, int *i, char c);
 void	ft_skip_chars(const char *str, int *i, char *base);
 void	ft_skip_space(const char *str, int *i);
 void	ft_skip_spacenl(const char *str, int *i);
+int		ft_strisnum(const char *str);
 #endif

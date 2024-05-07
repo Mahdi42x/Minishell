@@ -11,12 +11,12 @@ LDFLAGS = -lreadline
 
 HEADER = minishell.h
 
-MAIN = minishell signal
-PARSING = line tokens
+MAIN = minishell signal redir
+PARSING = line tokens expansions
 ENV = env shlvl get_env sort_env
-EXEC =
-BUILTINS = env export
-TOOLS = free parsing type token fd
+EXEC = bin builtin exec
+BUILTINS = env export exit
+TOOLS = free parsing type token fd expansions
 
 SRC = $(addsuffix .c, $(addprefix srcs/main/, $(MAIN))) \
 	  $(addsuffix .c, $(addprefix srcs/parsing/, $(PARSING))) \
