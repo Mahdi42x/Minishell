@@ -6,7 +6,7 @@
 /*   By: mawada <mawada@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:33:42 by mawada            #+#    #+#             */
-/*   Updated: 2024/04/26 13:10:18 by mawada           ###   ########.fr       */
+/*   Updated: 2024/05/11 14:19:46 by mawada           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static int	print_error(int error, const char *arg)
 	return (ERROR);
 }
 
-int			env_add(const char *value, t_env *env)
+int	env_add(const char *value, t_env *env)
 {
 	t_env	*new;
 	t_env	*tmp;
@@ -40,7 +40,8 @@ int			env_add(const char *value, t_env *env)
 		env->value = ft_strdup(value);
 		return (SUCCESS);
 	}
-	if (!(new = malloc(sizeof(t_env))))
+	new = malloc(sizeof(t_env));
+	if (!new)
 		return (-1);
 	new->value = ft_strdup(value);
 	while (env && env->next && env->next->next)
@@ -51,7 +52,7 @@ int			env_add(const char *value, t_env *env)
 	return (SUCCESS);
 }
 
-char		*get_env_name(char *dest, const char *src)
+char	*get_env_name(char *dest, const char *src)
 {
 	int		i;
 
@@ -65,7 +66,7 @@ char		*get_env_name(char *dest, const char *src)
 	return (dest);
 }
 
-int			is_in_env(t_env *env, char *args)
+int	is_in_env(t_env *env, char *args)
 {
 	char	var_name[BUFF_SIZE];
 	char	env_name[BUFF_SIZE];
@@ -85,7 +86,7 @@ int			is_in_env(t_env *env, char *args)
 	return (SUCCESS);
 }
 
-int			ft_export(char **args, t_env *env, t_env *secret)
+int	ft_export(char **args, t_env *env, t_env *secret)
 {
 	int		new_env;
 	int		error_ret;

@@ -15,7 +15,7 @@ MAIN = minishell signal redir
 PARSING = line tokens expansions
 ENV = env shlvl get_env sort_env
 EXEC = bin builtin exec
-BUILTINS = env export exit
+BUILTINS = env export exit pwd echo cd unset
 TOOLS = free parsing type token fd expansions
 
 SRC = $(addsuffix .c, $(addprefix srcs/main/, $(MAIN))) \

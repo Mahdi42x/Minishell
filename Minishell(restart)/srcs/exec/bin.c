@@ -6,7 +6,7 @@
 /*   By: mawada <mawada@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 14:50:02 by mawada            #+#    #+#             */
-/*   Updated: 2024/05/07 15:42:05 by mawada           ###   ########.fr       */
+/*   Updated: 2024/05/11 14:21:24 by mawada           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	magic_box(char *path, char **args, t_env *env, t_minishell *minishell)
 	return (ret);
 }
 
-char		*path_join(const char *s1, const char *s2)
+char	*path_join(const char *s1, const char *s2)
 {
 	char	*tmp;
 	char	*path;
@@ -82,7 +82,7 @@ char		*path_join(const char *s1, const char *s2)
 	return (path);
 }
 
-char		*check_dir(char *bin, char *command)
+char	*check_dir(char *bin, char *command)
 {
 	DIR				*folder;
 	struct dirent	*item;
@@ -92,7 +92,8 @@ char		*check_dir(char *bin, char *command)
 	folder = opendir(bin);
 	if (!folder)
 		return (NULL);
-	while ((item = readdir(folder)))
+	item = readdir(folder);
+	while (item)
 	{
 		if (ft_strcmp(item->d_name, command) == 0)
 			path = path_join(bin, item->d_name);
@@ -101,7 +102,7 @@ char		*check_dir(char *bin, char *command)
 	return (path);
 }
 
-int			exec_bin(char **args, t_env *env, t_minishell *minishell)
+int	exec_bin(char **args, t_env *env, t_minishell *minishell)
 {
 	int		i;
 	char	**bin;

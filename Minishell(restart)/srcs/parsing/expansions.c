@@ -6,13 +6,13 @@
 /*   By: mawada <mawada@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 15:05:55 by mawada            #+#    #+#             */
-/*   Updated: 2024/05/07 15:58:47 by mawada           ###   ########.fr       */
+/*   Updated: 2024/05/11 14:22:52 by mawada           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static int		varlcpy(char *new_arg, const char *env_value, int pos)
+static int	varlcpy(char *new_arg, const char *env_value, int pos)
 {
 	int		i;
 
@@ -22,7 +22,7 @@ static int		varlcpy(char *new_arg, const char *env_value, int pos)
 	return (i);
 }
 
-static void		insert_var(t_expansions *ex, char *arg, t_env *env, int ret)
+static void	insert_var(t_expansions *ex, char *arg, t_env *env, int ret)
 {
 	char	*env_value;
 
@@ -44,13 +44,14 @@ static void		insert_var(t_expansions *ex, char *arg, t_env *env, int ret)
 	}
 }
 
-char			*expansions(char *arg, t_env *env, int ret)
+char	*expansions(char *arg, t_env *env, int ret)
 {
 	t_expansions	ex;
 	int				new_arg_len;
 
 	new_arg_len = arg_alloc_len(arg, env, ret);
-	if (!(ex.new_arg = malloc(sizeof(char) * new_arg_len + 1)))
+	ex.new_arg = malloc(sizeof(char) * new_arg_len + 1);
+	if (!ex.new_arg)
 		return (NULL);
 	ex.i = 0;
 	ex.j = 0;
@@ -60,7 +61,7 @@ char			*expansions(char *arg, t_env *env, int ret)
 		{
 			ex.j++;
 			if ((arg[ex.j] == '\0' || ft_isalnum(arg[ex.j]) == 0)
-			&& arg[ex.j] != '?')
+				&& arg[ex.j] != '?')
 				ex.new_arg[ex.i++] = '$';
 			else
 				insert_var(&ex, arg, env, ret);

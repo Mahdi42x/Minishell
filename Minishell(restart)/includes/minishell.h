@@ -6,7 +6,7 @@
 /*   By: mawada <mawada@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 15:17:46 by mawada            #+#    #+#             */
-/*   Updated: 2024/05/07 14:58:12 by mawada           ###   ########.fr       */
+/*   Updated: 2024/05/11 14:38:28 by mawada           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ typedef struct s_expansions
 */
 void			redir(t_minishell *minishell, t_token *token, int type);
 void			input(t_minishell *minishell, t_token *token);
+void			handle_heredoc(t_minishell *minishell, t_token *token);
 int				minipipe(t_minishell *minishell);
 char			*expansions(char *arg, t_env *env, int ret);
 

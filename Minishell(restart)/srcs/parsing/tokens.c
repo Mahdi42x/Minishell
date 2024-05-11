@@ -6,7 +6,7 @@
 /*   By: mawada <mawada@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/18 14:18:03 by cclaude           #+#    #+#             */
-/*   Updated: 2024/04/30 14:31:47 by mawada           ###   ########.fr       */
+/*   Updated: 2024/05/11 14:24:14 by mawada           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ void	type_arg(t_token *token, int separator)
 	else
 		token->type = ARG;
 }
-
 
 void	squish_args(t_minishell *minishell)
 {
@@ -74,7 +73,7 @@ void	squish_args(t_minishell *minishell)
 	}
 }
 
-int		next_alloc(char *line, int *i)
+int	next_alloc(char *line, int *i)
 {
 	int		count;
 	int		j;
@@ -110,8 +109,9 @@ t_token	*next_token(char *line, int *i)
 	j = 0;
 	c = ' ';
 	token = malloc(sizeof(t_token));
+	token->str = malloc(sizeof(char) * next_alloc(line, i));
 	if (!(token)
-	|| !(token->str = malloc(sizeof(char) * next_alloc(line, i))))
+		|| !(token->str))
 		return (NULL);
 	while (line[*i] && (line[*i] != ' ' || c != ' '))
 	{

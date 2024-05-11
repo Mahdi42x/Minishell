@@ -6,7 +6,7 @@
 /*   By: mawada <mawada@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 14:48:33 by mawada            #+#    #+#             */
-/*   Updated: 2024/05/07 14:52:26 by mawada           ###   ########.fr       */
+/*   Updated: 2024/05/11 14:20:20 by mawada           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ char	**cmd_tab(t_token *start)
 		token = token->next;
 		i++;
 	}
-	if (!(tab = malloc(sizeof(char *) * i)))
+	tab = malloc(sizeof(char *) * i);
+	if (!tab)
 		return (NULL);
 	token = start->next;
 	tab[0] = start->str;

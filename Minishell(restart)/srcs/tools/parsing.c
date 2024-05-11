@@ -6,13 +6,13 @@
 /*   By: mawada <mawada@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 14:26:40 by mawada            #+#    #+#             */
-/*   Updated: 2024/04/30 14:32:37 by mawada           ###   ########.fr       */
+/*   Updated: 2024/05/11 14:15:09 by mawada           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int		is_sep(char *line, int i)
+int	is_sep(char *line, int i)
 {
 	if (i > 0 && line[i - 1] == '\\' && ft_strchr("<>|;", line[i]))
 		return (0);
@@ -22,7 +22,7 @@ int		is_sep(char *line, int i)
 		return (0);
 }
 
-int		ignore_sep(char *line, int i)
+int	ignore_sep(char *line, int i)
 {
 	if (line[i] && line[i] == '\\' && line[i + 1] && line[i + 1] == ';')
 		return (1);
@@ -31,12 +31,12 @@ int		ignore_sep(char *line, int i)
 	else if (line[i] && line[i] == '\\' && line[i + 1] && line[i + 1] == '>')
 		return (1);
 	else if (line[i] && line[i] == '\\' && line[i + 1] && line[i + 1] == '>'
-				&& line[i + 2] && line[i + 2] == '>')
+		&& line[i + 2] && line[i + 2] == '>')
 		return (1);
 	else if (line[i] && line[i] == '\\' && line[i + 1] && line[i + 1] == '<')
 		return (1);
 	else if (line[i] && line[i] == '\\' && line[i + 1] && line[i + 1] == '<'
-				&& line[i + 2] && line[i + 2] == '<')
+		&& line[i + 2] && line[i + 2] == '<')
 		return (1);
 	return (0);
 }
@@ -65,7 +65,7 @@ int	quotes(char *line, int index)
 	return (open);
 }
 
-int		is_last_valid_arg(t_token *token)
+int	is_last_valid_arg(t_token *token)
 {
 	t_token	*prev;
 
@@ -80,12 +80,12 @@ int		is_last_valid_arg(t_token *token)
 		return (0);
 }
 
-int		check_line(t_minishell *minishell, t_token *token)
+int	check_line(t_minishell *minishell, t_token *token)
 {
 	while (token)
 	{
 		if (is_types(token, "TAID")
-		&& (!token->next || is_types(token->next, "TAIDPE")))
+			&& (!token->next || is_types(token->next, "TAIDPE")))
 		{
 			ft_putstr_fd("bash: syntax error near unexpected token `", STDERR);
 			if (token->next)
@@ -97,7 +97,8 @@ int		check_line(t_minishell *minishell, t_token *token)
 			return (0);
 		}
 		if (is_types(token, "PE")
-		&& (!token->prev || !token->next || is_types(token->prev, "TAIDPE")))
+			&& (!token->prev || !token->next
+				|| is_types(token->prev, "TAIDPE")))
 		{
 			ft_putstr_fd("bash: syntax error near unexpected token `", STDERR);
 			ft_putstr_fd(token->str, STDERR);
@@ -109,5 +110,3 @@ int		check_line(t_minishell *minishell, t_token *token)
 	}
 	return (1);
 }
-
-

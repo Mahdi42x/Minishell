@@ -6,13 +6,13 @@
 /*   By: mawada <mawada@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 15:12:26 by mawada            #+#    #+#             */
-/*   Updated: 2024/05/07 15:12:29 by mawada           ###   ########.fr       */
+/*   Updated: 2024/05/11 14:10:29 by mawada           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int		ret_size(int ret)
+int	ret_size(int ret)
 {
 	char	*tmp;
 	int		ret_len;
@@ -23,7 +23,7 @@ int		ret_size(int ret)
 	return (ret_len);
 }
 
-int		get_var_len(const char *arg, int pos, t_env *env, int ret)
+int	get_var_len(const char *arg, int pos, t_env *env, int ret)
 {
 	char	var_name[BUFF_SIZE];
 	char	*var_value;
@@ -47,7 +47,7 @@ int		get_var_len(const char *arg, int pos, t_env *env, int ret)
 	return (i);
 }
 
-int		arg_alloc_len(const char *arg, t_env *env, int ret)
+int	arg_alloc_len(const char *arg, t_env *env, int ret)
 {
 	int		i;
 	int		size;

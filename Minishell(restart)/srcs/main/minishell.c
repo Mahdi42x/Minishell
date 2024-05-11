@@ -6,7 +6,7 @@
 /*   By: mawada <mawada@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 16:31:01 by mawada            #+#    #+#             */
-/*   Updated: 2024/05/07 16:04:22 by mawada           ###   ########.fr       */
+/*   Updated: 2024/05/11 14:42:59 by mawada           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	redir_and_exec(t_minishell *minishell, t_token *token)
 	else if (is_type(prev, INPUT))
 		input(minishell, token);
 	else if (is_type(prev, DOUBLE_INPUT))
-		redir(minishell, token, DOUBLE_INPUT);
+		handle_heredoc(minishell, token);
 	else if (is_type(prev, PIPE))
 		pipe = minipipe(minishell);
 	if (next && is_type(next, END) == 0 && pipe != 1)
@@ -53,7 +53,7 @@ void	minishell_(t_minishell *minishell)
 		minishell->charge = 1;
 		minishell->parent = 1;
 		minishell->last = 1;
-		redir_and_exec(minishell, token); //todo
+		redir_and_exec(minishell, token);
 		reset_std(minishell);
 		close_fds(minishell);
 		reset_fds(minishell);

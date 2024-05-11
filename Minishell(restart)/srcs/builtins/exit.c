@@ -6,7 +6,7 @@
 /*   By: mawada <mawada@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 14:59:51 by mawada            #+#    #+#             */
-/*   Updated: 2024/05/07 15:59:48 by mawada           ###   ########.fr       */
+/*   Updated: 2024/05/11 14:09:53 by mawada           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,3 @@ void	mini_exit(t_minishell *minishell, char **cmd)
 	else
 		minishell->ret = 0;
 }
-
