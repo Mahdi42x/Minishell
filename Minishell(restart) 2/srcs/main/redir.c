@@ -6,7 +6,7 @@
 /*   By: mawada <mawada@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 18:13:45 by mawada            #+#    #+#             */
-/*   Updated: 2024/05/06 18:13:48 by mawada           ###   ########.fr       */
+/*   Updated: 2024/05/13 16:50:13 by mawada           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,5 +72,45 @@ int		minipipe(t_minishell *minishell)
 		minishell->pid = pid;
 		minishell->last = 0;
 		return (1);
+	}
+}
+void	handle_heredoc(t_minishell *minishell, t_token *token)
+{
+	int fd;
+	char *input_buffer;
+	char *line;
+
+	// Öffnen der Datei im Lesemodus
+	input_buffer = NULL;
+	fd = open(token->str, O_RDONLY);
+	if (fd == -1)
+	{
+		ft_putstr_fd("minishell: ", STDERR);
+		ft_putstr_fd(token->str, STDERR);
+		ft_putendl_fd(": No such file or directory", STDERR);
+		minishell->ret = 1;
+		minishell->no_exec = 1;
+		return;
+	}
+
+	// Einlesen des Inhalts der Datei
+	line = get_next_line(fd);
+	while (line)
+	{
+		input_buffer = ft_strjoin(input_buffer, line);
+		input_buffer = ft_strjoin(input_buffer, "\n");
+		ft_memdel(line);
+	}
+
+	// Schließen der Datei
+	close(fd);
+
+	// Aktualisieren des Eingabepuffers
+	if (input_buffer)
+	{
+		rl_replace_line(input_buffer, 0);
+		rl_on_new_line();
+		rl_redisplay();
+		ft_memdel(input_buffer);
 	}
 }

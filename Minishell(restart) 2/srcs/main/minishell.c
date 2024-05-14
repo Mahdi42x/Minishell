@@ -6,7 +6,7 @@
 /*   By: mawada <mawada@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 16:31:01 by mawada            #+#    #+#             */
-/*   Updated: 2024/05/13 15:12:54 by mawada           ###   ########.fr       */
+/*   Updated: 2024/05/14 13:09:50 by mawada           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	redir_and_exec(t_minishell *minishell, t_token *token)
 	else if (is_type(prev, INPUT))
 		input(minishell, token);
 	else if (is_type(prev, DOUBLE_INPUT))
-		redir(minishell, token, DOUBLE_INPUT);
+		handle_heredoc(minishell, token);
 	else if (is_type(prev, PIPE))
 		pipe = minipipe(minishell);
 	if (next && is_type(next, END) == 0 && pipe != 1)
@@ -85,7 +85,7 @@ int	main(int argc, char **argv, char **envp)
 	minishell.no_exec = 0;
 	minishell.start = 0;
 	reset_fds(&minishell);
-	setup_signals();
+	// setup_signals();
 	env_init(&minishell, envp);
 	secret_env_init(&minishell, envp);
 	increment_shell_level(minishell.env);

@@ -6,7 +6,7 @@
 /*   By: mawada <mawada@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 15:17:46 by mawada            #+#    #+#             */
-/*   Updated: 2024/05/07 14:58:12 by mawada           ###   ########.fr       */
+/*   Updated: 2024/05/14 13:09:20 by mawada           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <limits.h>
 # include <sys/types.h>
 # include <sys/wait.h>
+# include <stdbool.h>
 # include "libft.h"
 # include <readline/readline.h>
 # include <readline/history.h>
@@ -81,6 +82,7 @@ typedef struct s_minishell
 	int				ret;
 	int				exit;
 	int				no_exec;
+	bool			has_running_process;
 }				t_minishell;
 
 typedef struct s_sig
@@ -98,6 +100,12 @@ typedef struct s_expansions
 	int				j;
 }				t_expansions;
 
+void		sigint_handler_parent(int num);
+void		sigint_handler_child(int num);
+void		sigquit_handler(int num);
+void		set_signals_parent(t_minishell *minishell);
+void		set_signals_child(t_minishell *minishell);
+
 /*
 ** MINISHELL
 */
@@ -105,6 +113,7 @@ void			redir(t_minishell *minishell, t_token *token, int type);
 void			input(t_minishell *minishell, t_token *token);
 int				minipipe(t_minishell *minishell);
 char			*expansions(char *arg, t_env *env, int ret);
+void			handle_heredoc(t_minishell *minishell, t_token *token);
 
 /*
 ** EXEC

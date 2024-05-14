@@ -6,7 +6,7 @@
 /*   By: mawada <mawada@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 12:14:03 by mawada            #+#    #+#             */
-/*   Updated: 2024/05/07 15:13:03 by mawada           ###   ########.fr       */
+/*   Updated: 2024/05/14 13:10:48 by mawada           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,9 @@ void	parse(t_minishell *minishell, t_token	*token)
 {
 	t_token	*current;
 
+	set_signals_parent(minishell);
 	minishell->line = readline("\033[0;36m\033[1mMinishell ▸ \033[0m");
+	set_signals_child(minishell);
 	add_history(minishell->line);
 	if (minishell->line == NULL || ft_strcmp(minishell->line, "exit") == 0)
 	{

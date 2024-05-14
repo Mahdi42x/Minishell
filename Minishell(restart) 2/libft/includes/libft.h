@@ -6,7 +6,7 @@
 /*   By: mawada <mawada@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 15:28:57 by mawada            #+#    #+#             */
-/*   Updated: 2024/05/13 15:25:47 by mawada           ###   ########.fr       */
+/*   Updated: 2024/05/13 16:55:21 by mawada           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	ft_putnbr_fd(int n, int fd);
 
 void	ft_putstr_fd(char *s, int fd);
 
-int		ft_putstr(char *s);
+void	ft_putstr(char *s);
 
 char	**ft_split(char const *s, char c);
 
