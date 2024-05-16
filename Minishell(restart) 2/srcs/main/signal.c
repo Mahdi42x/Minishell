@@ -6,7 +6,7 @@
 /*   By: mawada <mawada@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 12:51:56 by mawada            #+#    #+#             */
-/*   Updated: 2024/05/14 13:47:33 by mawada           ###   ########.fr       */
+/*   Updated: 2024/05/16 13:23:03 by mawada           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,19 @@ void	sigint_handler_parent(int num)
 void	sigint_handler_child(int num)
 {
 	(void)num;
-	ft_putstr("Quit (core dumped)");
 	write(1, "\n", 1);
-	rl_on_new_line();
+	// rl_on_new_line();
 }
 
-void	sigquit_handler(int num)
+void sigquit_handler(int num)
 {
-	(void)num;
+	if (num == SIGQUIT)
+	{
+		ft_putstr("Quit (core dumped)");
+		write(1, "\n", 1);
+		rl_on_new_line();
+	}
 }
-
 void	set_signals_parent(t_minishell *minishell)
 {
 	(void) *minishell;

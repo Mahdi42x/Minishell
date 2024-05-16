@@ -6,7 +6,7 @@
 /*   By: mawada <mawada@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 12:14:03 by mawada            #+#    #+#             */
-/*   Updated: 2024/05/14 13:10:48 by mawada           ###   ########.fr       */
+/*   Updated: 2024/05/16 13:20:28 by mawada           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ int	quote_check(t_minishell *minishell, char **line)
 void	parse(t_minishell *minishell, t_token	*token)
 {
 	t_token	*current;
+	int quit_printed = 0;
 
 	set_signals_parent(minishell);
 	minishell->line = readline("\033[0;36m\033[1mMinishell ▸ \033[0m");
@@ -112,4 +113,8 @@ void	parse(t_minishell *minishell, t_token	*token)
 		printf("%s (Type: %d)\n", current->str, current->type);
 		current = current->next;
 	}
+    if (quit_printed == 0 && signal(SIGQUIT, sigquit_handler) != SIG_ERR)
+    {
+        quit_printed = 1; // Aktualisiere die Variable, um anzuzeigen, dass die Ausgabe erfolgt ist
+    }
 }
