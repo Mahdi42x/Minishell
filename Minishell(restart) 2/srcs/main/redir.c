@@ -74,38 +74,29 @@ int		minipipe(t_minishell *minishell)
 		return (1);
 	}
 }
-void	handle_heredoc(t_minishell *minishell, t_token *token)
+
+void	handle_heredoc(t_token *token)
 {
-	int fd;
-	char *input_buffer;
-	char *line;
+	char	*input_buffer;
+	char	*line;
+	int		fd[2];
 
-	// Öffnen der Datei im Lesemodus
-	input_buffer = NULL;
-	fd = open(token->str, O_RDONLY);
-	if (fd == -1)
+	input_buffer = "";
+
+	if (pipe(fd) == -1)
 	{
-		ft_putstr_fd("minishell: ", STDERR);
-		ft_putstr_fd(token->str, STDERR);
-		ft_putendl_fd(": No such file or directory", STDERR);
-		minishell->ret = 1;
-		minishell->no_exec = 1;
-		return;
+		ft_putendl_fd("Pipe creation failed", STDERR);
+		return ;
 	}
-
-	// Einlesen des Inhalts der Datei
-	line = get_next_line(fd);
-	while (line)
+	write(fd[1], token->str, ft_strlen(token->str));
+	close(fd[1]);
+	while ((line = get_next_line(fd[0])))
 	{
 		input_buffer = ft_strjoin(input_buffer, line);
 		input_buffer = ft_strjoin(input_buffer, "\n");
 		ft_memdel(line);
 	}
-
-	// Schließen der Datei
-	close(fd);
-
-	// Aktualisieren des Eingabepuffers
+	close(fd[0]);
 	if (input_buffer)
 	{
 		rl_replace_line(input_buffer, 0);

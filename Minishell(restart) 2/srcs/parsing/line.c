@@ -110,11 +110,11 @@ void	parse(t_minishell *minishell, t_token	*token)
 	}
 	while (current != NULL)
 	{
-		printf("%s (Type: %d)\n", current->str, current->type);
+		//printf("%s \n", current->str, current->type);
 		current = current->next;
 	}
-    if (quit_printed == 0 && signal(SIGQUIT, sigquit_handler) != SIG_ERR)
-    {
-        quit_printed = 1; // Aktualisiere die Variable, um anzuzeigen, dass die Ausgabe erfolgt ist
-    }
+    if (quit_printed == 0 && signal(SIGQUIT, sigquit_handler) != SIG_ERR)	
+	{
+		quit_printed = 1; // Aktualisiere die Variable, um anzuzeigen, dass die Ausgabe erfolgt ist
+	}
 }
