@@ -113,7 +113,7 @@ void			redir(t_minishell *minishell, t_token *token, int type);
 void			input(t_minishell *minishell, t_token *token);
 int				minipipe(t_minishell *minishell);
 char			*expansions(char *arg, t_env *env, int ret);
-void			handle_heredoc(t_minishell *minishell, t_token *token);
+void			handle_heredoc(t_token *token, int *pipefd);
 
 /*
 ** EXEC
