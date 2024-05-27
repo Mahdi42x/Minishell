@@ -81,6 +81,7 @@ void	parse(t_minishell *minishell, t_token	*token)
 	t_token	*current;
 	int quit_printed = 0;
 
+	token->doc = 0;
 	set_signals_parent(minishell);
 	minishell->line = readline("\033[0;36m\033[1mMinishell ▸ \033[0m");
 	set_signals_child(minishell);

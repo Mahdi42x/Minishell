@@ -53,6 +53,7 @@ typedef struct s_token
 {
 	char			*str;
 	int				type;
+	int				doc;
 	struct s_token	*prev;
 	struct s_token	*next;
 }				t_token;

@@ -20,6 +20,7 @@ void	redir_and_exec(t_minishell *minishell, t_token *token)
 	t_token	*next;
 	int		pipe;
 
+	//token->doc = 0;
 	prev = prev_sep(token, NOSKIP);
 	next = next_sep(token, NOSKIP);
 	pipe = 0;
@@ -29,11 +30,10 @@ void	redir_and_exec(t_minishell *minishell, t_token *token)
 		redir(minishell, token, APPEND);
 	else if (is_type(prev, INPUT))
 		input(minishell, token);
-	else if (is_type(prev, DOUBLE_INPUT))
+	else if (is_type(prev, DOUBLE_INPUT) && token->doc != 1)
 		handle_heredoc(token, &minishell->fdin);
 	else if (is_type(prev, PIPE))
 		pipe = minipipe(minishell);
-//ft_putendl_fd(token->str, STDERR);
 	if (next && is_type(next, END) == 0 && pipe != 1)
 		redir_and_exec(minishell, next->next);
 	if ((is_type(prev, END) || is_type(prev, PIPE) || !prev)

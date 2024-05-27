@@ -80,24 +80,27 @@ void	handle_heredoc(t_token *token, int *pipefd)
 	char	*line;
 	int		fd[2];
 
-	//ft_putendl_fd(token->str, 2);
 	if (pipe(fd) == -1)
 	{
 		ft_putendl_fd("Pipe creation failed", STDERR);
 		return ;
 	}
+
+	ft_putstr_fd("> ", STDOUT);
 	while ((line = get_next_line(0)))
 	{
-		if (!ft_strncmp(line, token->str, strlen(token->str))
-			&& line[ft_strlen(token->str)] == '\n')
+		if (!ft_strncmp(line, token->str, strlen(token->str)) && line[ft_strlen(token->str)] == '\n')
 		{
+			free(line);
 			break ;
 		}
 		write(fd[1], line, ft_strlen(line));
-		ft_memdel(line);
+		free(line);
+		ft_putstr_fd("> ", STDOUT);
 	}
 	close(fd[1]);
 	close(*pipefd);
 	*pipefd = fd[0];
 	dup2(*pipefd, STDIN);
+	token->doc = 1; 
 }
