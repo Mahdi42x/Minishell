@@ -20,7 +20,6 @@ void	redir_and_exec(t_minishell *minishell, t_token *token)
 	t_token	*next;
 	int		pipe;
 
-	//token->doc = 0;
 	prev = prev_sep(token, NOSKIP);
 	next = next_sep(token, NOSKIP);
 	pipe = 0;

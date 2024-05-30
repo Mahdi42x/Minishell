@@ -75,21 +75,26 @@ int		minipipe(t_minishell *minishell)
 	}
 }
 
-void	handle_heredoc(t_token *token, int *pipefd)
+void	pipehelp(int *fd)
 {
-	char	*line;
-	int		fd[2];
-
 	if (pipe(fd) == -1)
 	{
 		ft_putendl_fd("Pipe creation failed", STDERR);
 		return ;
 	}
+}
 
+void	handle_heredoc(t_token *token, int *pipefd)
+{
+	char	*line;
+	int		fd[2];
+
+	pipehelp(fd);
 	ft_putstr_fd("> ", STDOUT);
 	while ((line = get_next_line(0)))
 	{
-		if (!ft_strncmp(line, token->str, strlen(token->str)) && line[ft_strlen(token->str)] == '\n')
+		if (!ft_strncmp(line, token->str, strlen(token->str))
+			&& line[ft_strlen(token->str)] == '\n')
 		{
 			free(line);
 			break ;

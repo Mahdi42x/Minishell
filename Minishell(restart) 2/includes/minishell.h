@@ -106,6 +106,7 @@ void		sigint_handler_child(int num);
 void		sigquit_handler(int num);
 void		set_signals_parent(t_minishell *minishell);
 void		set_signals_child(t_minishell *minishell);
+void		minshell_helper(t_minishell *minishell);
 
 /*
 ** MINISHELL
