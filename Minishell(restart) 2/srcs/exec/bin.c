@@ -40,6 +40,13 @@ int	error_message(char *path)
 	return (ret);
 }
 
+void	box_in_box(void);
+{
+	free_tab(env_array);
+	free_token(minishell->start);
+	exit(ret);
+}
+
 int	magic_box(char *path, char **args, t_env *env, t_minishell *minishell)
 {
 	char	**env_array;
@@ -56,9 +63,7 @@ int	magic_box(char *path, char **args, t_env *env, t_minishell *minishell)
 		if (ft_strchr(path, '/') != NULL)
 			execve(path, args, env_array);
 		ret = error_message(path);
-		free_tab(env_array);
-		free_token(minishell->start);
-		exit(ret);
+		box_in_box();
 	}
 	else
 		waitpid(g_sig.pid, &ret, 0);
@@ -71,7 +76,7 @@ int	magic_box(char *path, char **args, t_env *env, t_minishell *minishell)
 	return (ret);
 }
 
-char		*path_join(const char *s1, const char *s2)
+char	*path_join(const char *s1, const char *s2)
 {
 	char	*tmp;
 	char	*path;
@@ -82,7 +87,7 @@ char		*path_join(const char *s1, const char *s2)
 	return (path);
 }
 
-char		*check_dir(char *bin, char *command)
+char	*check_dir(char *bin, char *command)
 {
 	DIR				*folder;
 	struct dirent	*item;
@@ -101,7 +106,7 @@ char		*check_dir(char *bin, char *command)
 	return (path);
 }
 
-int			exec_bin(char **args, t_env *env, t_minishell *minishell)
+int	exec_bin(char **args, t_env *env, t_minishell *minishell)
 {
 	int		i;
 	char	**bin;

@@ -31,12 +31,12 @@ int		ignore_sep(char *line, int i)
 	else if (line[i] && line[i] == '\\' && line[i + 1] && line[i + 1] == '>')
 		return (1);
 	else if (line[i] && line[i] == '\\' && line[i + 1] && line[i + 1] == '>'
-				&& line[i + 2] && line[i + 2] == '>')
+		&& line[i + 2] && line[i + 2] == '>')
 		return (1);
 	else if (line[i] && line[i] == '\\' && line[i + 1] && line[i + 1] == '<')
 		return (1);
 	else if (line[i] && line[i] == '\\' && line[i + 1] && line[i + 1] == '<'
-				&& line[i + 2] && line[i + 2] == '<')
+		&& line[i + 2] && line[i + 2] == '<')
 		return (1);
 	return (0);
 }
@@ -80,34 +80,42 @@ int		is_last_valid_arg(t_token *token)
 		return (0);
 }
 
-int		check_line(t_minishell *minishell, t_token *token)
+int	check_token_syntax(t_minishell *minishell, t_token *token)
+{
+	if (is_types(token, "TAID") && (!token->next
+			|| is_types(token->next, "TAIDPE")))
+	{
+		ft_putstr_fd("bash: syntax error near unexpected token `", STDERR);
+		if (token->next)
+			ft_putstr_fd(token->next->str, STDERR);
+		else
+			ft_putstr_fd("newline", STDERR);
+		ft_putendl_fd("'", STDERR);
+		minishell->ret = 258;
+		return (0);
+	}
+	if (is_types(token, "PE") && (!token->prev
+			|| !token->next || is_types(token->prev, "TAIDPE")))
+	{
+		ft_putstr_fd("bash: syntax error near unexpected token `", STDERR);
+		ft_putstr_fd(token->str, STDERR);
+		ft_putendl_fd("'", STDERR);
+		minishell->ret = 258;
+		return (0);
+	}
+	return (1);
+}
+
+int	check_line(t_minishell *minishell, t_token *token)
 {
 	while (token)
 	{
-		if (is_types(token, "TAID")
-		&& (!token->next || is_types(token->next, "TAIDPE")))
-		{
-			ft_putstr_fd("bash: syntax error near unexpected token `", STDERR);
-			if (token->next)
-				ft_putstr_fd(token->next->str, STDERR);
-			else
-				ft_putstr_fd("newline", STDERR);
-			ft_putendl_fd("'", STDERR);
-			minishell->ret = 258;
+		if (!check_token_syntax(minishell, token))
 			return (0);
-		}
-		if (is_types(token, "PE")
-		&& (!token->prev || !token->next || is_types(token->prev, "TAIDPE")))
-		{
-			ft_putstr_fd("bash: syntax error near unexpected token `", STDERR);
-			ft_putstr_fd(token->str, STDERR);
-			ft_putendl_fd("'", STDERR);
-			minishell->ret = 258;
-			return (0);
-		}
 		token = token->next;
 	}
 	return (1);
 }
+
 
 

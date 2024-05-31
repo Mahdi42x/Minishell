@@ -35,46 +35,44 @@ void	type_arg(t_token *token, int separator)
 }
 
 
+void	squish_single_token(t_minishell *minishell, t_token *token)
+{
+	t_token	*prev;
+
+	prev = prev_sep(token, NOSKIP);
+	if (is_type(token, ARG) && is_types(prev, "TAID"))
+	{
+		while (!is_last_valid_arg(prev))
+			prev = prev->prev;
+		token->prev->next = token->next;
+		if (token->next)
+			token->next->prev = token->prev;
+		token->prev = prev;
+		token->next = prev ? prev->next : minishell->start;
+		if (!prev)
+			prev = token;
+		if (prev->next)
+			prev->next->prev = token;
+		prev->next = token;
+		if (minishell->start->prev)
+			minishell->start = minishell->start->prev;
+	}
+}
+
 void	squish_args(t_minishell *minishell)
 {
 	t_token	*token;
-	t_token	*prev;
 
 	token = minishell->start;
 	while (token)
 	{
-		prev = prev_sep(token, NOSKIP);
-		if (is_type(token, ARG) && is_types(prev, "TAID"))
-		{
-			while (is_last_valid_arg(prev) == 0)
-				prev = prev->prev;
-			token->prev->next = token->next;
-			if (token->next)
-				token->next->prev = token->prev;
-			token->prev = prev;
-			if (prev)
-				token->next = prev->next;
-			else
-				token->next = minishell->start;
-			if (!prev)
-				prev = token;
-			prev->next->prev = token;
-			if (minishell->start->prev)
-			{
-				prev->next = prev->next;
-				minishell->start = minishell->start->prev;
-			}
-			else
-			{
-				prev->next = token;
-				minishell->start = minishell->start;
-			}
-		}
+		squish_single_token(minishell, token);
 		token = token->next;
 	}
 }
 
-int		next_alloc(char *line, int *i)
+
+int	next_alloc(char *line, int *i)
 {
 	int		count;
 	int		j;
@@ -110,8 +108,7 @@ t_token	*next_token(char *line, int *i)
 	j = 0;
 	c = ' ';
 	token = malloc(sizeof(t_token));
-	if (!(token)
-	|| !(token->str = malloc(sizeof(char) * next_alloc(line, i))))
+	if (!(token) || !(token->str = malloc(sizeof(char) * next_alloc(line, i))))
 		return (NULL);
 	while (line[*i] && (line[*i] != ' ' || c != ' '))
 	{

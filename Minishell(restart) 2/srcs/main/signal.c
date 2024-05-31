@@ -25,10 +25,9 @@ void	sigint_handler_child(int num)
 {
 	(void)num;
 	write(1, "\n", 1);
-	// rl_on_new_line();
 }
 
-void sigquit_handler(int num)
+void	sigquit_handler(int num)
 {
 	if (num == SIGQUIT)
 	{
@@ -37,6 +36,7 @@ void sigquit_handler(int num)
 		rl_on_new_line();
 	}
 }
+
 void	set_signals_parent(t_minishell *minishell)
 {
 	(void) *minishell;

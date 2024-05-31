@@ -50,9 +50,6 @@ void	minishell_(t_minishell *minishell)
 		token = minishell->start->next;
 	while (minishell->exit == 0 && token)
 	{
-		minishell->charge = 1;
-		minishell->parent = 1;
-		minishell->last = 1;
 		redir_and_exec(minishell, token);
 		reset_std(minishell);
 		close_fds(minishell);
@@ -78,14 +75,7 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argc;
 	(void)argv;
-	minishell.in = dup(STDIN);
-	minishell.out = dup(STDOUT);
-	minishell.exit = 0;
-	minishell.ret = 0;
-	minishell.no_exec = 0;
-	minishell.start = 0;
 	reset_fds(&minishell);
-	// setup_signals();
 	env_init(&minishell, envp);
 	secret_env_init(&minishell, envp);
 	increment_shell_level(minishell.env);
