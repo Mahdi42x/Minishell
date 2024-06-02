@@ -16,11 +16,9 @@ void	redir(t_minishell *minishell, t_token *token, int type)
 {
 	ft_close(minishell->fdout);
 	if (type == TRUNC)
-		minishell->fdout = open(token->str, O_CREAT
-				| O_WRONLY | O_TRUNC, S_IRWXU);
+		minishell->fdout = open(token->str, O_CREAT | O_WRONLY | O_TRUNC, S_IRWXU);
 	else
-		minishell->fdout = open(token->str, O_CREAT
-				| O_WRONLY | O_APPEND, S_IRWXU);
+		minishell->fdout = open(token->str, O_CREAT | O_WRONLY | O_APPEND, S_IRWXU);
 	if (minishell->fdout == -1)
 	{
 		ft_putstr_fd("minishell: ", STDERR);
@@ -49,7 +47,7 @@ void	input(t_minishell *minishell, t_token *token)
 	dup2(minishell->fdin, STDIN);
 }
 
-int	minipipe(t_minishell *minishell)
+int		minipipe(t_minishell *minishell)
 {
 	pid_t	pid;
 	int		pipefd[2];

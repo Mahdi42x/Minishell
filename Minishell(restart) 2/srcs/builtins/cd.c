@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mawada <mawada@student.42berlin.de>        +#+  +:+       +#+        */
+/*   By: emkalkan <emkalkan@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 13:59:34 by mawada            #+#    #+#             */
-/*   Updated: 2024/05/11 14:17:33 by mawada           ###   ########.fr       */
+/*   Updated: 2024/06/01 12:35:03 by emkalkan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,23 +30,18 @@ static char	*get_env_path(t_env *env, const char *var, size_t len)
 	char	*oldpwd;
 	int		i;
 	int		j;
-	int		s_alloc;
 
 	while (env && env->next != NULL)
 	{
 		if (ft_strncmp(env->value, var, len) == 0)
 		{
-			s_alloc = ft_strlen(env->value) - len;
-			oldpwd = malloc(sizeof(char) * s_alloc + 1);
+			oldpwd = malloc(sizeof(char) * (ft_strlen(env->value) - len + 1));
 			if (!oldpwd)
 				return (NULL);
-			i = 0;
+			i = len;
 			j = 0;
-			while (env->value[i++])
-			{
-				if (i > (int)len)
-					oldpwd[j++] = env->value[i];
-			}
+			while (env->value[i])
+				oldpwd[j++] = env->value[i++];
 			oldpwd[j] = '\0';
 			return (oldpwd);
 		}
@@ -54,6 +49,7 @@ static char	*get_env_path(t_env *env, const char *var, size_t len)
 	}
 	return (NULL);
 }
+
 
 static int	update_oldpwd(t_env *env)
 {

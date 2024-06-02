@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mawada <mawada@student.42berlin.de>        +#+  +:+       +#+        */
+/*   By: emkalkan <emkalkan@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 15:17:46 by mawada            #+#    #+#             */
-/*   Updated: 2024/05/16 13:14:28 by mawada           ###   ########.fr       */
+/*   Updated: 2024/06/01 12:36:39 by emkalkan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,16 +101,17 @@ typedef struct s_expansions
 	int				j;
 }				t_expansions;
 
-void		sigint_handler_parent(int num);
-void		sigint_handler_child(int num);
-void		sigquit_handler(int num);
-void		set_signals_parent(t_minishell *minishell);
-void		set_signals_child(t_minishell *minishell);
-void		minshell_helper(t_minishell *minishell);
+void			sigint_handler_parent(int num);
+void			sigint_handler_child(int num);
+void			sigquit_handler(int num);
+void			set_signals_parent(t_minishell *minishell);
+void			set_signals_child(t_minishell *minishell);
+void			minshell_helper(t_minishell *minishell);
 
 /*
 ** MINISHELL
 */
+
 void			redir(t_minishell *minishell, t_token *token, int type);
 void			input(t_minishell *minishell, t_token *token);
 int				minipipe(t_minishell *minishell);
@@ -124,6 +125,9 @@ void			exec_cmd(t_minishell *minishell, t_token *token);
 int				exec_bin(char **args, t_env *env, t_minishell *minishell);
 int				exec_builtin(char **args, t_minishell *minishell);
 int				is_builtin(char	*command);
+char			*path_join(const char *s1, const char *s2);
+char			*check_dir(char *bin, char *command);
+
 
 /*
 ** BUILTINS
@@ -131,6 +135,8 @@ int				is_builtin(char	*command);
 int				ft_echo(char **args);
 int				ft_cd(char **args, t_env *env);
 int				ft_pwd(void);
+int				handle_error(int error_ret, char *arg);
+void			add_to_env(int error_ret, char *arg, t_env *env, t_env *secret);
 int				ft_export(char **args, t_env *env, t_env *secret);
 int				ft_env(t_env *env);
 int				env_add(const char *value, t_env *env);

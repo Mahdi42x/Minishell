@@ -40,6 +40,13 @@ void	redir_and_exec(t_minishell *minishell, t_token *token)
 		exec_cmd(minishell, token);
 }
 
+void	init_minishell(t_minishell *minishell)
+{
+	minishell->charge = 1;
+	minishell->parent = 1;
+	minishell->last = 1;
+}
+
 void	minishell_(t_minishell *minishell)
 {
 	t_token	*token;
@@ -50,6 +57,7 @@ void	minishell_(t_minishell *minishell)
 		token = minishell->start->next;
 	while (minishell->exit == 0 && token)
 	{
+		init_minishell(minishell);
 		redir_and_exec(minishell, token);
 		reset_std(minishell);
 		close_fds(minishell);
@@ -68,6 +76,16 @@ void	minishell_(t_minishell *minishell)
 	}
 }
 
+void	init_main(t_minishell *minishell)
+{
+	minishell->in = dup(STDIN);
+	minishell->out = dup(STDOUT);
+	minishell->exit = 0;
+	minishell->ret = 0;
+	minishell->no_exec = 0;
+	minishell->start = 0;
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	t_minishell	minishell;
@@ -75,6 +93,7 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argc;
 	(void)argv;
+	init_main(&minishell);
 	reset_fds(&minishell);
 	env_init(&minishell, envp);
 	secret_env_init(&minishell, envp);

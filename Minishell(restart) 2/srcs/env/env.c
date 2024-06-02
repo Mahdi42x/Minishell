@@ -46,9 +46,7 @@ char	*env_to_str(t_env *lst)
 			j = 0;
 			while (lst->value[j])
 			{
-				env[i] = lst->value[j];
-				i++;
-				j++;
+				env[i++] = lst->value[j++];
 			}
 		}
 		if (lst->next->next != NULL)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bin.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mawada <mawada@student.42berlin.de>        +#+  +:+       +#+        */
+/*   By: emkalkan <emkalkan@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 14:50:02 by mawada            #+#    #+#             */
-/*   Updated: 2024/05/07 15:42:05 by mawada           ###   ########.fr       */
+/*   Updated: 2024/06/01 12:18:29 by emkalkan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	error_message(char *path)
 	return (ret);
 }
 
-void	box_in_box(void);
+void	box_saption(char **env_array, t_minishell *minishell, int ret)
 {
 	free_tab(env_array);
 	free_token(minishell->start);
@@ -63,7 +63,7 @@ int	magic_box(char *path, char **args, t_env *env, t_minishell *minishell)
 		if (ft_strchr(path, '/') != NULL)
 			execve(path, args, env_array);
 		ret = error_message(path);
-		box_in_box();
+		box_saption(env_array, minishell, ret);
 	}
 	else
 		waitpid(g_sig.pid, &ret, 0);
@@ -74,36 +74,6 @@ int	magic_box(char *path, char **args, t_env *env, t_minishell *minishell)
 	else
 		ret = !!ret;
 	return (ret);
-}
-
-char	*path_join(const char *s1, const char *s2)
-{
-	char	*tmp;
-	char	*path;
-
-	tmp = ft_strjoin(s1, "/");
-	path = ft_strjoin(tmp, s2);
-	ft_memdel(tmp);
-	return (path);
-}
-
-char	*check_dir(char *bin, char *command)
-{
-	DIR				*folder;
-	struct dirent	*item;
-	char			*path;
-
-	path = NULL;
-	folder = opendir(bin);
-	if (!folder)
-		return (NULL);
-	while ((item = readdir(folder)))
-	{
-		if (ft_strcmp(item->d_name, command) == 0)
-			path = path_join(bin, item->d_name);
-	}
-	closedir(folder);
-	return (path);
 }
 
 int	exec_bin(char **args, t_env *env, t_minishell *minishell)

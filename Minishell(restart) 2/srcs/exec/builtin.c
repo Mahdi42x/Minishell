@@ -29,7 +29,7 @@ int		is_builtin(char *command)
 	return (0);
 }
 
-int	exec_builtin(char **args, t_minishell *minishell)
+int		exec_builtin(char **args, t_minishell *minishell)
 {
 	int		result;
 
