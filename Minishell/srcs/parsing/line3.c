@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   line3.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mahdi <mahdi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: emkalkan <emkalkan@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 12:14:03 by mawada            #+#    #+#             */
-/*   Updated: 2024/06/03 14:48:39 by mahdi            ###   ########.fr       */
+/*   Updated: 2024/06/05 16:51:31 by emkalkan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,10 @@ void	process_tokens(t_minishell *minishell, t_token *token)
 			type_arg(token, 0);
 		token = token->next;
 	}
+}
+
+void	next_tokenhelp(int *j, char *c)
+{
+	*j = 0;
+	*c = ' ';
 }

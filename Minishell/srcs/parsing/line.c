@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   line.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mahdi <mahdi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: emkalkan <emkalkan@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 12:14:03 by mawada            #+#    #+#             */
-/*   Updated: 2024/06/03 15:55:48 by mahdi            ###   ########.fr       */
+/*   Updated: 2024/06/05 16:49:38 by emkalkan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,16 +32,21 @@ char	*space_alloc(char *line)
 	return (new);
 }
 
+static char	*spaceinit(char *line, int *i, int *j)
+{
+	*i = 0;
+	*j = 0;
+	return (space_alloc(line));
+}
+
 char	*space_line(char *line)
 {
 	char	*new;
 	int		i;
 	int		j;
 
-	i = 0;
-	j = 0;
-	new = space_alloc(line);
-	while (new && line[i])
+	new = spaceinit(line, &i, &j);
+	while (line[i])
 	{
 		if (quotes(line, i) != 2 && line[i] == '$' && i && line[i - 1] != '\\')
 			new[j++] = (char)(-line[i++]);
@@ -49,9 +54,7 @@ char	*space_line(char *line)
 		{
 			new[j++] = ' ';
 			new[j++] = line[i++];
-			if (quotes(line, i) == 0 && line[i] == '>')
-				new[j++] = line[i++];
-			else if (quotes(line, i) == 0 && line[i] == '<')
+			if (quotes(line, i) == 0 && (line[i] == '>' || line[i] == '<'))
 				new[j++] = line[i++];
 			new[j++] = ' ';
 		}
@@ -75,42 +78,6 @@ int	quote_check(t_minishell *minishell, char **line)
 	}
 	return (0);
 }
-
-// void	parse(t_minishell *minishell, t_token	*token)
-// {
-// 	int	quit_printed;
-
-// 	quit_printed = 0;
-// 	token->doc = 0;
-// 	set_signals_parent(minishell);
-// 	minishell->line = readline("\033[0;36m\033[1mMinishell ▸ \033[0m");
-// 	set_signals_child(minishell);
-// 	add_history(minishell->line);
-// 	if (minishell->line == NULL || ft_strcmp(minishell->line, "exit") == 0)
-// 	{
-// 		ft_putendl_fd("exit", STDERR);
-// 		minishell->exit = 1;
-// 		ft_memdel(minishell->line);
-// 		return ;
-// 	}
-// 	if (quote_check(minishell, &minishell->line))
-// 		return ;
-// 	minishell->line = space_line(minishell->line);
-// 	if (minishell->line && minishell->line[0] == '$')
-// 		minishell->line[0] = (char)(-minishell->line[0]);
-// 	minishell->start = get_tokens(minishell->line);
-// 	ft_memdel(minishell->line);
-// 	squish_args(minishell);
-// 	token = minishell->start;
-// 	while (token)
-// 	{
-// 		if (is_type(token, ARG))
-// 			type_arg(token, 0);
-// 		token = token->next;
-// 	}
-// 	if (quit_printed == 0 && signal(SIGQUIT, sigquit_handler) != SIG_ERR)
-// 		quit_printed = 1;
-// }
 
 void	parse(t_minishell *minishell, t_token *token)
 {

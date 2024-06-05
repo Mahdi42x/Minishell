@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mahdi <mahdi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: emkalkan <emkalkan@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 15:17:46 by mawada            #+#    #+#             */
-/*   Updated: 2024/06/03 15:29:29 by mahdi            ###   ########.fr       */
+/*   Updated: 2024/06/05 16:51:49 by emkalkan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,8 @@ void			sigquit_handler(int num);
 void			set_signals_parent(t_minishell *minishell);
 void			set_signals_child(t_minishell *minishell);
 void			minshell_helper(t_minishell *minishell);
+void			next_tokenhelp(int *j, char *c);
+
 
 /*
 ** MINISHELL

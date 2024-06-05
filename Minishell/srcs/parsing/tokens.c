@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokens.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mahdi <mahdi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: emkalkan <emkalkan@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 15:21:31 by mahdi             #+#    #+#             */
-/*   Updated: 2024/06/04 13:02:17 by mahdi            ###   ########.fr       */
+/*   Updated: 2024/06/05 16:51:18 by emkalkan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,7 @@ t_token	*next_token(char *line, int *i)
 	int		j;
 	char	c;
 
-	j = 0;
-	c = ' ';
+	next_tokenhelp(&j, &c);
 	token = malloc(sizeof(t_token));
 	token->str = malloc(sizeof(char) * next_alloc(line, i));
 	if (!(token) || !(token->str))
