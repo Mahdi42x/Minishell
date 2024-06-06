@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emkalkan <emkalkan@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: mahdi <mahdi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 15:17:46 by mawada            #+#    #+#             */
-/*   Updated: 2024/06/05 16:51:49 by emkalkan         ###   ########.fr       */
+/*   Updated: 2024/06/06 15:19:10 by mahdi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,28 +101,16 @@ typedef struct s_expansions
 	int				j;
 }				t_expansions;
 
-void			sigint_handler_parent(int num);
-void			sigint_handler_child(int num);
-void			sigquit_handler(int num);
-void			set_signals_parent(t_minishell *minishell);
-void			set_signals_child(t_minishell *minishell);
-void			minshell_helper(t_minishell *minishell);
-void			next_tokenhelp(int *j, char *c);
-
-
-/*
-** MINISHELL
-*/
-
+/* MINISHELL */
 void			redir(t_minishell *minishell, t_token *token, int type);
 void			input(t_minishell *minishell, t_token *token);
 int				minipipe(t_minishell *minishell);
 char			*expansions(char *arg, t_env *env, int ret);
 void			handle_heredoc(t_token *token, int *pipefd);
+void			minshell_helper(t_minishell *minishell);
+void			next_tokenhelp(int *j, char *c);
 
-/*
-** EXEC
-*/
+/* EXEC */
 void			exec_cmd(t_minishell *minishell, t_token *token);
 int				exec_bin(char **args, t_env *env, t_minishell *minishell);
 int				exec_builtin(char **args, t_minishell *minishell);
@@ -133,10 +121,7 @@ int				count_tokens(t_token *start);
 char			**fill_tab(t_token *start, int size);
 char			**cmd_tab(t_token *start);
 
-
-/*
-** BUILTINS
-*/
+/* BUILTINS */
 int				ft_echo(char **args);
 int				ft_cd(char **args, t_env *env);
 int				ft_pwd(void);
@@ -153,9 +138,7 @@ int				is_in_env(t_env *env, char *args);
 int				ft_unset(char **args, t_minishell *minishell);
 void			mini_exit(t_minishell *minishell, char **cmd);
 
-/*
-** PARSING
-*/
+/* PARSING */
 void			parse(t_minishell *minishell, t_token *token);
 t_token			*get_tokens(char *line);
 void			squish_args(t_minishell *minishell);
@@ -174,20 +157,21 @@ int				next_alloc(char *line, int *i);
 char			*create_spaced_line(char *line);
 void			continue_spaced_line(char *line, char *new, int *i, int *j);
 void			complete_spaced_line(char *line, char *new, int *i, int *j);
+void			process_escape_char(char *line, int *i,
+					char *token_str, int *j);
 
-void 			process_escape_char(char *line, int *i, char *token_str, int *j);
-void 			process_quotes(char *line, int *i, char *c);
-t_token 		*allocate_token(char *line, int *i);
+void			process_quotes(char *line, int *i, char *c);
+t_token			*allocate_token(char *line, int *i);
 
 void			handle_token(t_token *token, t_minishell *minishell);
-void			reattach_token(t_token *token, t_token *prev, t_minishell *minishell);
+void			reattach_token(t_token *token, t_token *prev,
+					t_minishell *minishell);
 void			initialize_shell(t_minishell *minishell, t_token *token);
 int				check_exit_conditions(t_minishell *minishell);
 void			process_line(t_minishell *minishell);
 void			process_tokens(t_minishell *minishell, t_token *token);
-/*
-** ENV
-*/
+
+/* ENV */
 int				check_line(t_minishell *minishell, t_token *token);
 char			*env_to_str(t_env *lst);
 int				env_init(t_minishell *minishell, char **env_array);
@@ -201,49 +185,43 @@ void			print_sorted_env(t_env *env);
 void			increment_shell_level(t_env *env);
 size_t			size_env(t_env *lst);
 
-/*
-** FD TOOLS
-*/
+/* FD TOOLS */
 void			reset_std(t_minishell *minishell);
 void			close_fds(t_minishell *minishell);
 void			ft_close(int fd);
 void			reset_fds(t_minishell *minishell);
 
-/*
-** FREE TOOLS
-*/
+/* FREE TOOLS */
 void			free_token(t_token *start);
 void			free_env(t_env *env);
 void			free_tab(char **tab);
 
-/*
-** TOKEN TOOLS
-*/
+/* TOKEN TOOLS */
 t_token			*next_sep(t_token *token, int skip);
 t_token			*prev_sep(t_token *token, int skip);
 t_token			*next_run(t_token *token, int skip);
 
-/*
-** TYPE TOOLS
-*/
+/* TYPE TOOLS */
 int				is_type(t_token *token, int type);
 int				is_types(t_token *token, char *types);
 int				has_type(t_token *token, int type);
 int				has_pipe(t_token *token);
 t_token			*next_type(t_token *token, int type, int skip);
 int				check_token_error(t_minishell *minishell, t_token *token);
-/*
-** EXPANSIONS
-*/
+
+/* EXPANSIONS */
 int				ret_size(int ret);
 int				get_var_len(const char *arg, int pos, t_env *env, int ret);
 int				arg_alloc_len(const char *arg, t_env *env, int ret);
 char			*get_var_value(const char *arg, int pos, t_env *env, int ret);
 
-/*
-** SIGNAL
-*/
+/* SIGNAL */
 void			setup_signals(void);
+void			sigint_handler_parent(int num);
+void			sigint_handler_child(int num);
+void			sigquit_handler(int num);
+void			set_signals_parent(t_minishell *minishell);
+void			set_signals_child(t_minishell *minishell);
 
 extern t_sig	g_sig;
 
