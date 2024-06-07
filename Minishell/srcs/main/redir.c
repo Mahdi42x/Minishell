@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mahdi <mahdi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: emkalkan <emkalkan@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 18:13:45 by mawada            #+#    #+#             */
-/*   Updated: 2024/06/03 14:34:42 by mahdi            ###   ########.fr       */
+/*   Updated: 2024/06/07 13:44:49 by emkalkan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,12 +77,23 @@ int	minipipe(t_minishell *minishell)
 	}
 }
 
-void	pipehelp(int *fd)
+void	pipehelp(int *fd, t_token *token, int *pipefd, int e)
 {
-	if (pipe(fd) == -1)
+	if (e == 0)
 	{
-		ft_putendl_fd("Pipe creation failed", STDERR);
-		return ;
+		if (pipe(fd) == -1)
+		{
+			ft_putendl_fd("Pipe creation failed", STDERR);
+			return ;
+		}
+	}
+	if (e == 1)
+	{
+		close(fd[1]);
+		close(*pipefd);
+		*pipefd = fd[0];
+		dup2(*pipefd, STDIN);
+		token->doc = 1;
 	}
 }
 
@@ -91,8 +102,8 @@ void	handle_heredoc(t_token *token, int *pipefd)
 	char	*line;
 	int		fd[2];
 
-	pipehelp(fd);
-	ft_putstr_fd("> ", STDOUT);
+	pipehelp(fd, token, pipefd, 0);
+	ft_putstr_fd("> ", STDERR);
 	line = get_next_line(0);
 	while (line)
 	{
@@ -104,12 +115,8 @@ void	handle_heredoc(t_token *token, int *pipefd)
 		}
 		write(fd[1], line, ft_strlen(line));
 		free(line);
-		ft_putstr_fd("> ", STDOUT);
+		ft_putstr_fd("> ", STDERR);
 		line = get_next_line(0);
 	}
-	close(fd[1]);
-	close(*pipefd);
-	*pipefd = fd[0];
-	dup2(*pipefd, STDIN);
-	token->doc = 1;
+	pipehelp(fd, token, pipefd, 1);
 }
