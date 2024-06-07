@@ -51,16 +51,25 @@ int	handle_errors(char *arg)
 void	update_env(char *arg, t_env *env, t_env *secret, int error_ret)
 {
 	int	new_env;
+	int	new_secret_env;
 
 	new_env = 0;
+	new_secret_env = 0;
+
 	if (error_ret == 2)
 		new_env = 1;
 	else
 		new_env = is_in_env(env, arg);
+
+	new_secret_env = is_in_secret_env(secret, arg);
+
 	if (new_env == 0)
 	{
 		if (error_ret == 1)
 			env_add(arg, env);
+	}
+	if (new_secret_env == 0)
+	{
 		env_add(arg, secret);
 	}
 }

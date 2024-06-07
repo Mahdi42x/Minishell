@@ -22,14 +22,26 @@ static size_t	env_size(char *env)
 	return (i);
 }
 
-static void	free_node(t_minishell *minishell, t_env *env)
+static void	free_node(t_env **head, t_env *env)
 {
-	if (minishell->env == env && env->next == NULL)
+	if (*head == env && env->next == NULL)
 	{
-		ft_memdel(minishell->env->value);
-		minishell->env->value = NULL;
-		minishell->env->next = NULL;
-		return ;
+		ft_memdel((*head)->value);
+		(*head)->value = NULL;
+		(*head)->next = NULL;
+		return;
+	}
+	if (*head == env)
+	{
+		*head = env->next;
+	}
+	else
+	{
+		t_env *prev = *head;
+		while (prev && prev->next != env)
+			prev = prev->next;
+		if (prev)
+			prev->next = env->next;
 	}
 	ft_memdel(env->value);
 	ft_memdel(env);
@@ -40,27 +52,48 @@ int	unset_env_var(char *var, t_minishell *minishell)
 	t_env	*env;
 	t_env	*tmp;
 
+	// Entfernen aus env-Liste
 	env = minishell->env;
-	if (ft_strncmp(var, env->value, env_size(env->value)) == 0)
+	if (env && ft_strncmp(var, env->value, env_size(env->value)) == 0)
 	{
-		if (env->next)
-			minishell->env = env->next;
-		else
-			minishell->env = NULL;
-		free_node(minishell, env);
-		return (SUCCESS);
+		free_node(&minishell->env, env);
 	}
-	while (env && env->next)
+	else
 	{
-		if (ft_strncmp(var, env->next->value, env_size(env->next->value)) == 0)
+		while (env && env->next)
 		{
-			tmp = env->next->next;
-			free_node(minishell, env->next);
-			env->next = tmp;
-			return (SUCCESS);
+			if (ft_strncmp(var, env->next->value, env_size(env->next->value)) == 0)
+			{
+				tmp = env->next->next;
+				free_node(&minishell->env, env->next);
+				env->next = tmp;
+				break;
+			}
+			env = env->next;
 		}
-		env = env->next;
 	}
+
+	// Entfernen aus secret_env-Liste
+	env = minishell->secret_env;
+	if (env && ft_strncmp(var, env->value, env_size(env->value)) == 0)
+	{
+		free_node(&minishell->secret_env, env);
+	}
+	else
+	{
+		while (env && env->next)
+		{
+			if (ft_strncmp(var, env->next->value, env_size(env->next->value)) == 0)
+			{
+				tmp = env->next->next;
+				free_node(&minishell->secret_env, env->next);
+				env->next = tmp;
+				break;
+			}
+			env = env->next;
+		}
+	}
+
 	return (SUCCESS);
 }
 

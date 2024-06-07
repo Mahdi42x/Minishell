@@ -54,7 +54,7 @@ int	is_in_env(t_env *env, char *args)
 	char	env_name[BUFF_SIZE];
 
 	get_env_name(var_name, args);
-	while (env && env->next)
+	while (env)
 	{
 		get_env_name(env_name, env->value);
 		if (ft_strcmp(var_name, env_name) == 0)
@@ -65,40 +65,28 @@ int	is_in_env(t_env *env, char *args)
 		}
 		env = env->next;
 	}
-	return (SUCCESS);
+	return (0);
 }
 
-// int	ft_export(char **args, t_env *env, t_env *secret)
-// {
-// 	int		new_env;
-// 	int		error_ret;
+int	is_in_secret_env(t_env *secret_env, char *args)
+{
+	char	var_name[BUFF_SIZE];
+	char	secret_env_name[BUFF_SIZE];
 
-// 	new_env = 0;
-// 	if (!args[1])
-// 	{
-// 		print_sorted_env(secret);
-// 		return (SUCCESS);
-// 	}
-// 	else
-// 	{
-// 		error_ret = is_valid_env(args[1]);
-// 		if (args[1][0] == '=')
-// 			error_ret = -3;
-// 		if (error_ret <= 0)
-// 			return (print_error(error_ret, args[1]));
-// 		if (error_ret == 2)
-// 			new_env = 1;
-// 		else
-// 			new_env = is_in_env(env, args[1]);
-// 		if (new_env == 0)
-// 		{
-// 			if (error_ret == 1)
-// 				env_add(args[1], env);
-// 			env_add(args[1], secret);
-// 		}
-// 	}
-// 	return (SUCCESS);
-// }
+	get_env_name(var_name, args);
+	while (secret_env)
+	{
+		get_env_name(secret_env_name, secret_env->value);
+		if (ft_strcmp(var_name, secret_env_name) == 0)
+		{
+			ft_memdel(secret_env->value);
+			secret_env->value = ft_strdup(args);
+			return (1);
+		}
+		secret_env = secret_env->next;
+	}
+	return (0);
+}
 
 int	ft_export(char **args, t_env *env, t_env *secret)
 {
