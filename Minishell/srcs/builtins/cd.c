@@ -33,12 +33,12 @@ static char	*get_env_path(t_env *env, const char *var, size_t len)
 
 	while (env && env->next != NULL)
 	{
-		if (ft_strncmp(env->value, var, len) == 0)
+		if (ft_strncmp(env->value, var, len) == 0 && env->value[len] == '=')
 		{
 			oldpwd = malloc(sizeof(char) * (ft_strlen(env->value) - len + 1));
 			if (!oldpwd)
 				return (NULL);
-			i = len;
+			i = len + 1;
 			j = 0;
 			while (env->value[i])
 				oldpwd[j++] = env->value[i++];
