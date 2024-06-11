@@ -12,7 +12,7 @@ LDFLAGS = -lreadline
 HEADER = minishell.h
 
 MAIN = minishell signal redir
-PARSING = line line2 line3 tokens tokens2 expansions
+PARSING = line line3 tokens tokens2 expansions
 ENV = env shlvl get_env sort_env
 EXEC = bin builtin exec bin_help
 BUILTINS = env export export2 exit cd echo pwd unset

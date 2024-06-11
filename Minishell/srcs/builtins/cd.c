@@ -6,7 +6,7 @@
 /*   By: emkalkan <emkalkan@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 13:59:34 by mawada            #+#    #+#             */
-/*   Updated: 2024/06/01 12:35:03 by emkalkan         ###   ########.fr       */
+/*   Updated: 2024/06/07 16:12:56 by emkalkan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,12 @@ static char	*get_env_path(t_env *env, const char *var, size_t len)
 
 	while (env && env->next != NULL)
 	{
-		if (ft_strncmp(env->value, var, len) == 0 && env->value[len] == '=')
+		if (ft_strncmp(env->value, var, len) == 0)
 		{
 			oldpwd = malloc(sizeof(char) * (ft_strlen(env->value) - len + 1));
 			if (!oldpwd)
 				return (NULL);
-			i = len + 1;
+			i = len;
 			j = 0;
 			while (env->value[i])
 				oldpwd[j++] = env->value[i++];
@@ -66,6 +66,7 @@ static int	update_oldpwd(t_env *env)
 	return (SUCCESS);
 }
 
+
 static int	go_to_path(int option, t_env *env)
 {
 	int		ret;
@@ -81,7 +82,7 @@ static int	go_to_path(int option, t_env *env)
 		if (!env_path)
 			return (ERROR);
 	}
-	else if (option == 1)
+	else if (option == 1)	
 	{
 		env_path = get_env_path(env, "OLDPWD", 6);
 		if (!env_path)
@@ -95,14 +96,20 @@ static int	go_to_path(int option, t_env *env)
 	return (ret);
 }
 
+
 int	ft_cd(char **args, t_env *env)
 {
 	int		cd_ret;
 
+	//ft_putendl_fd(args[1], STDERR);
 	if (!args[1])
+	{
 		return (go_to_path(0, env));
+	}
 	if (ft_strcmp(args[1], "-") == 0)
+	{
 		cd_ret = go_to_path(1, env);
+	}
 	else
 	{
 		update_oldpwd(env);

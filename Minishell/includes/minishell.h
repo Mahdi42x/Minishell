@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mahdi <mahdi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: emkalkan <emkalkan@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 15:17:46 by mawada            #+#    #+#             */
-/*   Updated: 2024/06/06 15:19:10 by mahdi            ###   ########.fr       */
+/*   Updated: 2024/06/07 13:26:22 by emkalkan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,6 +184,7 @@ int				is_valid_env(const char *env);
 void			print_sorted_env(t_env *env);
 void			increment_shell_level(t_env *env);
 size_t			size_env(t_env *lst);
+int				is_in_secret_env(t_env *secret_env, char *args);
 
 /* FD TOOLS */
 void			reset_std(t_minishell *minishell);
